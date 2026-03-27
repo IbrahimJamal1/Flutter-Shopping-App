@@ -8,12 +8,12 @@ class Home extends StatefulWidget {
   State<Home> createState() => _HomeState();
 }
 
-String name = "ibrahim gamal";
-String e_mail = "ibrahim@gmail.com";
-String image = "images/background.jpg";
+String ? name;
+String ? e_mail ;
+String ? image ;
 
 class _HomeState extends State<Home> {
-  int rating = 0; // ⭐ بدل 5 متغيرات
+  int rating = 0; 
 
   @override
   Widget build(BuildContext context) {
@@ -49,16 +49,16 @@ class _HomeState extends State<Home> {
                   child: ListTile(
                     contentPadding: EdgeInsets.all(20),
                     title: Text(
-                      name,
+                      name!,
                       style: TextStyle(color: Colors.white, fontSize: 20),
                     ),
                     subtitle: Text(
-                      e_mail,
+                      e_mail!,
                       style: TextStyle(color: Colors.white70),
                     ),
                     trailing: CircleAvatar(
                       radius: 30,
-                      backgroundImage: AssetImage(image),
+                      backgroundImage: AssetImage(image!),
                     ),
                   ),
                 ),

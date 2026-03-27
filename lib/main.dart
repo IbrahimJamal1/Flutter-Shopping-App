@@ -88,7 +88,7 @@ class intropage extends StatelessWidget {
 
         child: Container(
           padding: EdgeInsets.all(20),
-          color: Colors.black.withOpacity(0.4), // طبقة فوق الصورة
+          color: Colors.black.withOpacity(0.4), 
 
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
