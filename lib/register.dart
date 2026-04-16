@@ -26,7 +26,9 @@ class _RegisterState extends State<Register> {
           backgroundColor: Colors.lightBlueAccent,
         ),
 
-        body: Form( // ✅ فورم واحدة
+        body:ListView(
+          children: [
+            Form( 
           key: formkey,
           child: Column(
             spacing: 25,
@@ -205,6 +207,8 @@ class _RegisterState extends State<Register> {
             ],
           ),
         ),
+          ],
+        )
       ),
     );
   }

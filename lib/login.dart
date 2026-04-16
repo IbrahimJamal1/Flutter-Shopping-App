@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'home.dart';
 
 class Login extends StatefulWidget {
   const Login({super.key});
@@ -12,6 +13,7 @@ class _LoginState extends State<Login> {
   TextEditingController passw = TextEditingController();
 
   bool remb = false;
+  bool obscure = true; 
 
   @override
   Widget build(BuildContext context) {
@@ -21,7 +23,6 @@ class _LoginState extends State<Login> {
       appBar: AppBar(
         title: Text("MegaDevices"),
         backgroundColor: Color(0xFF0D47A1),
-        elevation: 0,
       ),
 
       body: SingleChildScrollView(
@@ -40,6 +41,7 @@ class _LoginState extends State<Login> {
 
             SizedBox(height: 30),
 
+            
             Padding(
               padding: EdgeInsets.all(10),
               child: TextField(
@@ -47,16 +49,11 @@ class _LoginState extends State<Login> {
                 decoration: InputDecoration(
                   filled: true,
                   fillColor: Colors.white,
-                  prefixIcon: Icon(Icons.email, color: Color(0xFF0D47A1)),
+                  prefixIcon:
+                      Icon(Icons.email, color: Color(0xFF0D47A1)),
                   hintText: "Email",
-                  hintStyle: TextStyle(color: Colors.grey),
-                  enabledBorder: OutlineInputBorder(
+                  border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(15),
-                    borderSide: BorderSide(color: Colors.grey.shade300),
-                  ),
-                  focusedBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(15),
-                    borderSide: BorderSide(color: Color(0xFF0D47A1), width: 2),
                   ),
                 ),
               ),
@@ -66,37 +63,40 @@ class _LoginState extends State<Login> {
               padding: EdgeInsets.all(10),
               child: TextField(
                 controller: passw,
-                obscureText: true,
+                obscureText: obscure,
                 decoration: InputDecoration(
                   filled: true,
                   fillColor: Colors.white,
-                  prefixIcon: Icon(Icons.lock, color: Color(0xFF0D47A1)),
+                  prefixIcon:
+                      Icon(Icons.lock, color: Color(0xFF0D47A1)),
                   hintText: "Password",
-                  hintStyle: TextStyle(color: Colors.grey),
-                  enabledBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(15),
-                    borderSide: BorderSide(color: Colors.grey.shade300),
+
+                  suffixIcon: IconButton(
+                    icon: Icon(obscure
+                        ? Icons.visibility
+                        : Icons.visibility_off),
+                    onPressed: () {
+                      setState(() {
+                        obscure = !obscure;
+                      });
+                    },
                   ),
-                  focusedBorder: OutlineInputBorder(
+
+                  border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(15),
-                    borderSide: BorderSide(color: Color(0xFF0D47A1), width: 2),
                   ),
                 ),
               ),
             ),
 
             CheckboxListTile(
-              activeColor: Color(0xFF0D47A1),
-              title: Text(
-                "Remember me",
-                style: TextStyle(color: Color(0xFF212121)),
-              ),
               value: remb,
               onChanged: (val) {
                 setState(() {
                   remb = val!;
                 });
               },
+              title: Text("Remember me"),
             ),
 
             SizedBox(height: 10),
@@ -104,56 +104,45 @@ class _LoginState extends State<Login> {
             MaterialButton(
               minWidth: 200,
               height: 50,
-              onPressed: () {
-                if (email.text == "") {
-                  if (passw.text == "") {
-                    Navigator.of(context).pushNamed("home");
-                  } else {
-                    showError(context);
-                  }
-                } else {
-                  showError(context);
-                }
-              },
               color: Color(0xFF1976D2),
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(12),
               ),
-              child: Text(
-                "Login",
-                style: TextStyle(fontSize: 20, color: Colors.white),
-              ),
+              child: Text("Login",
+                  style: TextStyle(color: Colors.white)),
+              onPressed: () {
+                if (email.text == "ibrahim@gmail.com" &&
+                    passw.text == "123") {
+
+                  name = "Ibrahim Gamal";
+                  e_mail = email.text;
+                  image = null; 
+
+                  Navigator.of(context)
+                      .pushReplacementNamed("home");
+
+                } else {
+                  showError(context);
+                }
+              },
             ),
 
             SizedBox(height: 15),
 
+           
             MaterialButton(
               minWidth: 200,
               height: 50,
-              onPressed: () {
-                email.clear();
-                passw.clear();
-              },
               color: Colors.red,
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(12),
               ),
-              child: Text(
-                "Reset",
-                style: TextStyle(fontSize: 20, color: Colors.white),
-              ),
-            ),
-
-            SizedBox(height: 10),
-
-            TextButton(
+              child: Text("Reset",
+                  style: TextStyle(color: Colors.white)),
               onPressed: () {
-                Navigator.of(context).pushNamed("regis");
+                email.clear();
+                passw.clear();
               },
-              child: Text(
-                "Forgot password?",
-                style: TextStyle(color: Color(0xFF0D47A1)),
-              ),
             ),
           ],
         ),
@@ -166,13 +155,9 @@ class _LoginState extends State<Login> {
       context: context,
       builder: (context) {
         return AlertDialog(
-          backgroundColor: Colors.white,
-          title: Text(
-            "Error",
-            style: TextStyle(color: Colors.red),
-          ),
-          content: Text("Password or Email is not correct"),
-          icon: Icon(Icons.error, color: Colors.red),
+          title: Text("Error",
+              style: TextStyle(color: Colors.red)),
+          content: Text("Email or Password not correct"),
         );
       },
     );
