@@ -156,7 +156,7 @@ class _LoginState extends State<Login> {
       builder: (context) {
         return AlertDialog(
           title: Text("Error",
-              style: TextStyle(color: Colors.red)),
+            style: TextStyle(color: Colors.red)),
           content: Text("Email or Password not correct"),
         );
       },

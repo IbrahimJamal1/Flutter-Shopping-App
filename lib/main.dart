@@ -1,3 +1,4 @@
+import 'package:ecommerce/cart.dart';
 import 'package:ecommerce/home.dart';
 import 'package:ecommerce/login.dart';
 import 'package:ecommerce/register.dart';
@@ -55,10 +56,12 @@ class MyApp extends StatelessWidget {
       ),
 
       routes: {
-        "main": (context) => intropage(),
+        "main": (context) => Intropage(),
         "log": (context) => Login(),
         "regis": (context) => Register(),
         "home": (context) => Home(),
+        "cart":(context) => Mycart(),
+        
       },
 
       home: Home(),
@@ -66,8 +69,8 @@ class MyApp extends StatelessWidget {
   }
 }
 
-class intropage extends StatelessWidget {
-  const intropage({super.key});
+class Intropage extends StatelessWidget {
+  const Intropage({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -89,8 +92,6 @@ class intropage extends StatelessWidget {
 
         child: Container(
           padding: EdgeInsets.all(20),
-          color: Colors.black.withOpacity(0.4), 
-
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [

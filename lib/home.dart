@@ -24,7 +24,7 @@ class _HomeState extends State<Home> {
         actions: [
           IconButton(
             onPressed: () {
-              showSearch(context: context, delegate: search());
+              showSearch(context: context, delegate: Search());
             },
             icon: Icon(Icons.search, size: 30),
           ),
@@ -179,6 +179,17 @@ class _HomeState extends State<Home> {
                 ),
                 Text(product[index]["name"]),
                 Text("${product[index]["price"]} \$"),
+                MaterialButton(
+                  onPressed: (){
+
+                    //my cart
+
+                  },
+                  color: Colors.blue,
+                  minWidth: 1000,
+
+                  child: Text("add cart",style: TextStyle(fontSize: 25,color: Colors.white),),
+                )
               ],
             ),
           );
@@ -196,7 +207,7 @@ class _HomeState extends State<Home> {
   }
 }
 
-class search extends SearchDelegate {
+class Search extends SearchDelegate {
   @override
   List<Widget>? buildActions(BuildContext context) {
     return [
