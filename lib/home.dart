@@ -171,7 +171,7 @@ class _HomeState extends State<Home> {
             child: Column(
               children: [
                 Expanded(
-                  child: Image.network(
+                  child: Image.asset(
                     product[index]["imag"],
                     fit: BoxFit.cover,
                     width: double.infinity,
