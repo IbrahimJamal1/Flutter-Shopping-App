@@ -37,6 +37,10 @@ List product = [
   
 ];
 
+String? name;
+String? email;
+String? image;
+
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 

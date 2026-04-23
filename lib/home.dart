@@ -1,10 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:ecommerce/main.dart';
 
-String? name;
-String? e_mail;
-String? image;
-
 class Home extends StatefulWidget {
   const Home({super.key});
 
@@ -44,23 +40,23 @@ class _HomeState extends State<Home> {
             children: [
 
               Container(
-                      color: Color(0xFF0D47A1),
-                      child: ListTile(
-                        contentPadding: EdgeInsets.all(20),
-                        title: Text(
-                          name ?? "Guest",
-                          style: TextStyle(color: Colors.white, fontSize: 20),
-                        ),
-                        subtitle: Text(
-                          e_mail ?? "No Email",
-                          style: TextStyle(color: Colors.white70),
-                        ),
-                        trailing: CircleAvatar(
-                          radius: 30,
-                          child: Icon(Icons.person),
-                        ),
-                      ),
-                    ),
+                color: Color(0xFF0D47A1),
+                child: ListTile(
+                  contentPadding: EdgeInsets.all(20),
+                  title: Text(
+                    name ?? "Guest",
+                    style: TextStyle(color: Colors.white, fontSize: 20),
+                  ),
+                  subtitle: Text(
+                    email ?? "No Email",
+                    style: TextStyle(color: Colors.white70),
+                  ),
+                  trailing: CircleAvatar(
+                    radius: 30,
+                    child: Icon(Icons.person),
+                  ),
+                ),
+              ),
 
               
               buildTile("Home", Icons.home, () {
@@ -145,7 +141,7 @@ class _HomeState extends State<Home> {
               onTap: () {
                 setState(() {
                   name = "MegaDevices";
-                  e_mail = "MegaDevices@gmail.com";
+                  email = "MegaDevices@gmail.com";
                 });
                 Navigator.of(context).pushNamed("log");
               },

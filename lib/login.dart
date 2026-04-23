@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'home.dart';
+import 'package:ecommerce/main.dart';
 
 class Login extends StatefulWidget {
   const Login({super.key});
@@ -112,14 +112,10 @@ class _LoginState extends State<Login> {
                   style: TextStyle(color: Colors.white)),
               onPressed: () {
                 if (email.text == "ibrahim@gmail.com" &&
-                    passw.text == "123") {
-
-                  name = "Ibrahim Gamal";
-                  e_mail = email.text;
+                  passw.text == "123") {
                   image = null; 
-
                   Navigator.of(context)
-                      .pushReplacementNamed("home");
+                  .pushReplacementNamed("home");
 
                 } else {
                   showError(context);
