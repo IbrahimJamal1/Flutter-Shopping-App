@@ -1,6 +1,7 @@
 import 'package:ecommerce/cart.dart';
 import 'package:ecommerce/home.dart';
 import 'package:ecommerce/login.dart';
+import 'package:ecommerce/phone.dart';
 import 'package:ecommerce/register.dart';
 import 'package:flutter/material.dart';
 import 'package:ecommerce/providerapp.dart';
@@ -71,7 +72,7 @@ class MyApp extends StatelessWidget {
         "regis": (context) => Register(),
         "home": (context) => Home(),
         "cart":(context) => Mycart(),
-        
+        "phone":(context) => Phone(),
       },
 
       home: Home(),
