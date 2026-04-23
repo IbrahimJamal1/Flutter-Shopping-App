@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:ecommerce/main.dart';
+import 'package:provider/provider.dart';
+import 'package:ecommerce/providerapp.dart';
+
 
 class Login extends StatefulWidget {
   const Login({super.key});
@@ -109,23 +111,26 @@ class _LoginState extends State<Login> {
                 borderRadius: BorderRadius.circular(12),
               ),
               child: Text("Login",
-                  style: TextStyle(color: Colors.white)),
+              style: TextStyle(color: Colors.white)),
               onPressed: () {
                 if (email.text == "ibrahim@gmail.com" &&
                   passw.text == "123") {
-                  image = null; 
-                  Navigator.of(context)
-                  .pushReplacementNamed("home");
+                  String userName = email.text.split('@')[0];
+                  context.read<UserProvider>().login(
+                    userName,
+                    email.text
+                  );
+
+                  Navigator.of(context).pushReplacementNamed("home");
 
                 } else {
                   showError(context);
                 }
-              },
+              }
             ),
 
             SizedBox(height: 15),
 
-           
             MaterialButton(
               minWidth: 200,
               height: 50,

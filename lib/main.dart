@@ -3,9 +3,19 @@ import 'package:ecommerce/home.dart';
 import 'package:ecommerce/login.dart';
 import 'package:ecommerce/register.dart';
 import 'package:flutter/material.dart';
+import 'package:ecommerce/providerapp.dart';
+import 'package:provider/provider.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(
+    MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create: (_) => UserProvider()),
+        
+      ],
+      child: MyApp(),
+    ),
+  );
 }
 
 List product = [
@@ -36,10 +46,6 @@ List product = [
   },
   
 ];
-
-String? name;
-String? email;
-String? image;
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});

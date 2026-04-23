@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:ecommerce/main.dart';
+import 'package:provider/provider.dart';
+import 'package:ecommerce/providerapp.dart';
 
 class Home extends StatefulWidget {
   const Home({super.key});
@@ -10,9 +12,9 @@ class Home extends StatefulWidget {
 
 class _HomeState extends State<Home> {
   int rating = 0;
-
   @override
   Widget build(BuildContext context) {
+      final user = context.watch<UserProvider>();
     return Scaffold(
       appBar: AppBar(
         title: Text("MegaDevices"),
@@ -40,15 +42,16 @@ class _HomeState extends State<Home> {
             children: [
 
               Container(
+                
                 color: Color(0xFF0D47A1),
                 child: ListTile(
                   contentPadding: EdgeInsets.all(20),
                   title: Text(
-                    name ?? "Guest",
+                    user.name ,
                     style: TextStyle(color: Colors.white, fontSize: 20),
                   ),
                   subtitle: Text(
-                    email ?? "No Email",
+                    user.email ,
                     style: TextStyle(color: Colors.white70),
                   ),
                   trailing: CircleAvatar(
@@ -58,8 +61,7 @@ class _HomeState extends State<Home> {
                 ),
               ),
 
-              
-              buildTile("Home", Icons.home, () {
+              buildTile("Add Account", Icons.home, () {
                 Navigator.of(context).pushNamed("main");
               }),
 
@@ -139,11 +141,7 @@ class _HomeState extends State<Home> {
               ),
               trailing: Icon(Icons.logout, color: Colors.white),
               onTap: () {
-                setState(() {
-                  name = "MegaDevices";
-                  email = "MegaDevices@gmail.com";
-                });
-                Navigator.of(context).pushNamed("log");
+                context.read<UserProvider>().logout();
               },
             ),
           ),
