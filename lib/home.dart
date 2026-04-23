@@ -1,3 +1,4 @@
+import 'package:ecommerce/tv.dart';
 import 'package:flutter/material.dart';
 import 'package:ecommerce/main.dart';
 import 'package:provider/provider.dart';
@@ -11,7 +12,11 @@ class Home extends StatefulWidget {
   State<Home> createState() => _HomeState();
 }
 
-List<Widget> bottomnavig = [];
+List<Widget> bottomnavig = [
+  LaptopScreen(),
+  Tv(), 
+  Phone()
+];
 
 class _HomeState extends State<Home> {
   int rating = 0;
@@ -56,7 +61,9 @@ class _HomeState extends State<Home> {
             icon: Icon(Icons.search, size: 30),
           ),
           IconButton(
-            onPressed: () {},
+            onPressed: () {
+              Navigator.pushNamed(context, "cart");
+            },
             icon: Icon(Icons.shopping_cart, size: 30),
           ),
         ],
@@ -218,50 +225,66 @@ class _HomeState extends State<Home> {
         ),
       ),
 
-      body: GridView.builder(
-        padding: EdgeInsets.all(10),
-        itemCount: product.length,
-        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-          crossAxisCount: 2,
-          crossAxisSpacing: 10,
-          mainAxisSpacing: 10,
-          childAspectRatio: 0.75,
-        ),
-        itemBuilder: (context, index) {
-          return Card(
-            child: Column(
-              children: [
-                Expanded(
-                  child: Image.asset(
-                    product[index]["imag"],
-                    fit: BoxFit.cover,
-                    width: double.infinity,
-                  ),
-                ),
-                Text(product[index]["name"]),
-                Text("${product[index]["price"]} \$"),
-                MaterialButton(
-                  onPressed: () {
-                    //my cart
-                  },
-                  color: Colors.blue,
-                  minWidth: 1000,
-
-                  child: Text(
-                    "add cart",
-                    style: TextStyle(fontSize: 25, color: Colors.white),
-                  ),
-                ),
-              ],
-            ),
-          );
-        },
-      ),
+      body: bottomnavig.elementAt(selectindec),
     );
   }
+}
 
-  Widget buildTile(String title, IconData icon, VoidCallback onTap) {
-    return ListTile(title: Text(title), trailing: Icon(icon), onTap: onTap);
+class LaptopScreen extends StatelessWidget {
+  const LaptopScreen({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return GridView.builder(
+      padding: EdgeInsets.all(10),
+      itemCount: Prodects.length,
+      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+        crossAxisCount: 2,
+        crossAxisSpacing: 10,
+        mainAxisSpacing: 10,
+        childAspectRatio: 0.75,
+      ),
+      itemBuilder: (context, index) {
+        return Card(
+          child: Column(
+            children: [
+              Expanded(
+                child: Image.asset(
+                  Prodects[index]["imag"],
+                  fit: BoxFit.cover,
+                  width: double.infinity,
+                ),
+              ),
+              Text(Prodects[index]["name"]),
+              Text("${Prodects[index]["price"]} \$"),
+              MaterialButton(
+                onPressed: () {
+                  context.read<CartProvider>().addcart(
+                    Prodects[index]["price"],
+                    Prodects[index]["name"],
+                    Prodects[index]["imag"],
+                    
+                  );
+
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(
+                      content: Text("Added to cart ✅"),
+                      duration: Duration(seconds: 1),
+                    ),
+                  );
+                },
+                color: Colors.blue,
+                minWidth: double.infinity,
+                child: Text(
+                  "Add Cart",
+                  style: TextStyle(fontSize: 18, color: Colors.white),
+                ),
+              ),
+            ],
+          ),
+        );
+      },
+    );
   }
 }
 
@@ -295,19 +318,19 @@ class Search extends SearchDelegate {
 
   @override
   Widget buildSuggestions(BuildContext context) {
-    List filtered = product.where((item) {
+    List filtered = Prodects.where((item) {
       return item["name"].toLowerCase().contains(query.toLowerCase());
     }).toList();
 
     if (query.isEmpty) {
-      return Center(child: Text("Search products..."));
+      return Center(child: Text("Search Prodects..."));
     }
 
     return ListView.builder(
       itemCount: filtered.length,
       itemBuilder: (context, index) {
         return ListTile(
-          leading: Image.network(
+          leading: Image.asset(
             filtered[index]["imag"],
             width: 50,
             height: 50,

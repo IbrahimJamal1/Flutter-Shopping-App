@@ -12,14 +12,14 @@ void main() {
     MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (_) => UserProvider()),
-        
+        ChangeNotifierProvider(create: (_) => CartProvider()),
       ],
       child: MyApp(),
     ),
   );
 }
 
-List product = [
+List Prodects = [
   {
     "imag": "images/image_1.jpg",
     "name": "HP Pavilion 15",
@@ -76,6 +76,7 @@ class MyApp extends StatelessWidget {
       },
 
       home: Home(),
+      
     );
   }
 }

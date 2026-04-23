@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:ecommerce/main.dart';
 
-class Phone extends StatelessWidget {
-  const Phone({super.key});
+class Tv extends StatelessWidget {
+  const Tv({super.key});
 
   @override
   Widget build(BuildContext context) {

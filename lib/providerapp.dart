@@ -17,3 +17,16 @@ class UserProvider extends ChangeNotifier {
   }
 
 }
+
+class CartProvider extends ChangeNotifier {
+  String price = "" ;
+  String name ="" ;
+  String pathimg="";
+
+  void addcart (String p,String n,String path){
+    price=p;
+    name=n;
+    pathimg=path;
+  }
+
+}
