@@ -46,22 +46,24 @@ void confirmation(BuildContext context, String n) {
     builder: (context) {
       return AlertDialog(
         title: Text("confirmation", style: TextStyle(color: Colors.red)),
-        content: Text("you buyment the $n ",style: TextStyle(fontSize: 25)),
+        content: Text("you buyment the $n ", style: TextStyle(fontSize: 25)),
         icon: Icon(Icons.warning),
         actions: [
           MaterialButton(
-            onPressed:(){
-              showModalBottomSheet(context: context, 
-                builder: (context){
-                  return Container(
-                    child: Text("Successful"),
-                  );
-                }
+            onPressed: () {
+              ScaffoldMessenger.of(context).showSnackBar(
+                SnackBar(
+                  content: Text("Successful Buyment✅"),
+                  duration: Duration(seconds: 1),
+                ),
               );
-              Navigator.pushNamed(context, "cart");
+              Navigator.pushReplacementNamed(context, "home");
             },
-            child: Text("ok",style: TextStyle(color:Colors.red,fontSize: 22),),
-          )
+            child: Text(
+              "ok",
+              style: TextStyle(color: Colors.red, fontSize: 22),
+            ),
+          ),
         ],
       );
     },
