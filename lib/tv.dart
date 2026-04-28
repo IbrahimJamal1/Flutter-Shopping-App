@@ -8,7 +8,7 @@ class Tv extends StatelessWidget {
   Widget build(BuildContext context) {
     return GridView.builder(
       padding: EdgeInsets.all(10),
-      itemCount: Prodects.length,
+      itemCount: laptopDev.length,
       gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
         crossAxisCount: 2,
         crossAxisSpacing: 10,
@@ -21,13 +21,13 @@ class Tv extends StatelessWidget {
             children: [
               Expanded(
                 child: Image.asset(
-                  Prodects[index]["imag"],
+                  laptopDev[index]["imag"],
                   fit: BoxFit.cover,
                   width: double.infinity,
                 ),
               ),
-              Text(Prodects[index]["name"]),
-              Text("${Prodects[index]["price"]} \$"),
+              Text(laptopDev[index]["name"]),
+              Text("${laptopDev[index]["price"]} \$"),
               MaterialButton(
                 onPressed: () {
                   //my cart

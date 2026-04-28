@@ -1,6 +1,7 @@
 import 'package:ecommerce/cart.dart';
 import 'package:ecommerce/home.dart';
 import 'package:ecommerce/login.dart';
+
 import 'package:ecommerce/phone.dart';
 import 'package:ecommerce/register.dart';
 import 'package:flutter/material.dart';
@@ -19,7 +20,7 @@ void main() {
   );
 }
 
-List Prodects = [
+List laptopDev = [
   {
     "imag": "images/image_1.jpg",
     "name": "HP Pavilion 15",
@@ -46,6 +47,45 @@ List Prodects = [
     "price": "1650"
   },
   
+];
+
+List phoneDev = [
+  {
+    "imag": "images/phone/imag_1.jpg",
+    "name": "iPhone 15",
+    "price": "999"
+  },
+  {
+    "imag": "images/phone/imag_2.jpg",
+    "name": "Samsung Galaxy S24",
+    "price": "899"
+  },
+  {
+    "imag": "images/phone/imag_3.jpg",
+    "name": "Google Pixel 8",
+    "price": "799"
+  },
+  {
+    "imag": "images/phone/imag_4.jpg",
+    "name": "OnePlus 12",
+    "price": "749"
+  },
+  {
+    "imag": "images/phone/imag_5.jpg",
+    "name": "Xiaomi 14",
+    "price": "699"
+  },
+  {
+  "imag": "images/phone/imag_6.jpg",
+  "name": "Xiaomi 14",
+  "price": "4758"
+  },
+  {
+    "imag": "images/phone/imag_7.jpg",
+    "name": "Xiaomi 14",
+    "price": "8000"
+  }
+
 ];
 
 class MyApp extends StatelessWidget {

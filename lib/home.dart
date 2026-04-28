@@ -13,14 +13,16 @@ class Home extends StatefulWidget {
 }
 
 List<Widget> bottomnavig = [
+
   LaptopScreen(),
   Tv(), 
-  Phone()
+  Phone(),
+
 ];
 
 class _HomeState extends State<Home> {
   int rating = 0;
-  int selectindec = 0;
+  int selectindec = 2;
   @override
   Widget build(BuildContext context) {
     final user = context.watch<UserProvider>();
@@ -237,7 +239,7 @@ class LaptopScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return GridView.builder(
       padding: EdgeInsets.all(10),
-      itemCount: Prodects.length,
+      itemCount: laptopDev.length,
       gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
         crossAxisCount: 2,
         crossAxisSpacing: 10,
@@ -250,19 +252,19 @@ class LaptopScreen extends StatelessWidget {
             children: [
               Expanded(
                 child: Image.asset(
-                  Prodects[index]["imag"],
+                  laptopDev[index]["imag"],
                   fit: BoxFit.cover,
                   width: double.infinity,
                 ),
               ),
-              Text(Prodects[index]["name"]),
-              Text("${Prodects[index]["price"]} \$"),
+              Text(laptopDev[index]["name"]),
+              Text("${laptopDev[index]["price"]} \$"),
               MaterialButton(
                 onPressed: () {
                   context.read<CartProvider>().addcart(
-                    Prodects[index]["price"],
-                    Prodects[index]["name"],
-                    Prodects[index]["imag"],
+                    laptopDev[index]["price"],
+                    laptopDev[index]["name"],
+                    laptopDev[index]["imag"],
                     
                   );
 
@@ -318,9 +320,13 @@ class Search extends SearchDelegate {
 
   @override
   Widget buildSuggestions(BuildContext context) {
-    List filtered = Prodects.where((item) {
+    List filtered = laptopDev.where((item) {
       return item["name"].toLowerCase().contains(query.toLowerCase());
     }).toList();
+
+    filtered.addAll(phoneDev.where((item) {
+      return item["name"].toLowerCase().contains(query.toLowerCase());
+    }).toList());
 
     if (query.isEmpty) {
       return Center(child: Text("Search Prodects..."));
