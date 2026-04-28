@@ -1,73 +1,55 @@
 import 'package:flutter/material.dart';
 import 'package:ecommerce/main.dart';
+import 'package:ecommerce/providerapp.dart';
+import 'package:provider/provider.dart';
 
 class Phone extends StatelessWidget {
   const Phone({super.key});
 
   @override
-  Widget build(BuildContext context) {
+   Widget build(BuildContext context) {
     return GridView.builder(
-      padding: const EdgeInsets.all(10),
+      padding: EdgeInsets.all(10),
       itemCount: phoneDev.length,
-      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
         crossAxisCount: 2,
         crossAxisSpacing: 10,
         mainAxisSpacing: 10,
-        childAspectRatio: 0.72,
+        childAspectRatio: 0.75,
       ),
       itemBuilder: (context, index) {
         return Card(
-          elevation: 4,
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(12),
-          ),
           child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Expanded(
-                child: ClipRRect(
-                  borderRadius: const BorderRadius.vertical(
-                    top: Radius.circular(12),
-                  ),
-                  child: Image.asset(
+                child: Image.asset(
+                  phoneDev[index]["imag"],
+                  fit: BoxFit.cover,
+                  width: double.infinity,
+                ),
+              ),
+              Text(phoneDev[index]["name"]),
+              Text("${phoneDev[index]["price"]} \$"),
+              MaterialButton(
+                onPressed: () {
+                  context.read<CartProvider>().addcart(
+                    phoneDev[index]["price"],
+                    phoneDev[index]["name"],
                     phoneDev[index]["imag"],
-                    fit: BoxFit.cover,
-                    width: double.infinity,
-                  ),
-                ),
-              ),
+                  );
 
-              Padding(
-                padding: const EdgeInsets.all(8.0),
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(
+                      content: Text("Added to cart ✅"),
+                      duration: Duration(seconds: 1),
+                    ),
+                  );
+                },
+                color: Colors.blue,
+                minWidth: double.infinity,
                 child: Text(
-                  phoneDev[index]["name"],
-                  style: const TextStyle(
-                    fontSize: 16,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-              ),
-
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                child: Text(
-                  "${phoneDev[index]["price"]} \$",
-                  style: const TextStyle(
-                    color: Colors.green,
-                    fontSize: 14,
-                  ),
-                ),
-              ),
-
-              const SizedBox(height: 5),
-
-              SizedBox(
-                width: double.infinity,
-                child: ElevatedButton(
-                  onPressed: () {
-                    // add to cart
-                  },
-                  child: const Text("Add to cart"),
+                  "Add Cart",
+                  style: TextStyle(fontSize: 18, color: Colors.white),
                 ),
               ),
             ],
@@ -76,4 +58,5 @@ class Phone extends StatelessWidget {
       },
     );
   }
+
 }

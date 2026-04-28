@@ -1,7 +1,6 @@
 import 'package:ecommerce/cart.dart';
 import 'package:ecommerce/home.dart';
 import 'package:ecommerce/login.dart';
-
 import 'package:ecommerce/phone.dart';
 import 'package:ecommerce/register.dart';
 import 'package:flutter/material.dart';
@@ -22,27 +21,27 @@ void main() {
 
 List laptopDev = [
   {
-    "imag": "images/image_1.jpg",
+    "imag": "images/lapimage/image_1.jpg",
     "name": "HP Pavilion 15",
     "price": "1400"
   },
   {
-    "imag": "images/image_2.jpg",
+    "imag": "images/lapimage/image_2.jpg",
     "name": "MacBook Air M3",
     "price": "1099"
   },
   {
-    "imag": "images/image_3.jpg",
+    "imag": "images/lapimage/image_3.jpg",
     "name": "Dell XPS 13",
     "price": "1250"
   },
   {
-    "imag": "images/image_4.jpg",
+    "imag": "images/lapimage/image_4.jpg",
     "name": "Lenovo Yoga 7i",
     "price": "850"
   },
   {
-    "imag": "images/image_5.jpg",
+    "imag": "images/lapimage/image_5.jpg",
     "name": "ASUS ROG Zephyrus G14",
     "price": "1650"
   },
@@ -86,6 +85,44 @@ List phoneDev = [
     "price": "8000"
   }
 
+];
+
+List tvDev = [
+  {
+    "imag": "images/tvimage/image_1.jpg",
+    "name": "Samsung 55 Smart TV",
+    "price": "600"
+  },
+  {
+    "imag": "images/tvimage/image_2.jpg",
+    "name": "LG OLED 65",
+    "price": "1200"
+  },
+  {
+    "imag": "images/tvimage/image_3.jpg",
+    "name": "Sony Bravia 50",
+    "price": "750"
+  },
+  {
+    "imag": "images/tvimage/image_4.jpg",
+    "name": "TCL 4K Smart TV",
+    "price": "450"
+  },
+  {
+    "imag": "images/tvimage/image_5.jpg",
+    "name": "Hisense 55 Inch",
+    "price": "500"
+  },
+  {
+    "imag": "images/tvimage/image_6.jpg",
+    "name": "Xiaomi Mi TV 4A",
+    "price": "400"
+  },
+  {
+    "imag": "images/tvimage/image_7.jpg",
+    "name": "Philips Ambilight 58",
+    "price": "800"
+  }
 ];
 
 class MyApp extends StatelessWidget {

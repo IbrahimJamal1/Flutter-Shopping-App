@@ -22,7 +22,7 @@ List<Widget> bottomnavig = [
 
 class _HomeState extends State<Home> {
   int rating = 0;
-  int selectindec = 2;
+  int selectindec = 0;
   @override
   Widget build(BuildContext context) {
     final user = context.watch<UserProvider>();
@@ -325,6 +325,10 @@ class Search extends SearchDelegate {
     }).toList();
 
     filtered.addAll(phoneDev.where((item) {
+      return item["name"].toLowerCase().contains(query.toLowerCase());
+    }).toList());
+
+    filtered.addAll(tvDev.where((item) {
       return item["name"].toLowerCase().contains(query.toLowerCase());
     }).toList());
 

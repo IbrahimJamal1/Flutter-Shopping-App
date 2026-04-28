@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:ecommerce/main.dart';
+import 'package:ecommerce/providerapp.dart';
+import 'package:provider/provider.dart';
 
 class Tv extends StatelessWidget {
   const Tv({super.key});
@@ -8,7 +10,7 @@ class Tv extends StatelessWidget {
   Widget build(BuildContext context) {
     return GridView.builder(
       padding: EdgeInsets.all(10),
-      itemCount: laptopDev.length,
+      itemCount: tvDev.length,
       gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
         crossAxisCount: 2,
         crossAxisSpacing: 10,
@@ -21,23 +23,34 @@ class Tv extends StatelessWidget {
             children: [
               Expanded(
                 child: Image.asset(
-                  laptopDev[index]["imag"],
+                  tvDev[index]["imag"],
                   fit: BoxFit.cover,
                   width: double.infinity,
                 ),
               ),
-              Text(laptopDev[index]["name"]),
-              Text("${laptopDev[index]["price"]} \$"),
+              Text(tvDev[index]["name"]),
+              Text("${tvDev[index]["price"]} \$"),
               MaterialButton(
                 onPressed: () {
-                  //my cart
+                  context.read<CartProvider>().addcart(
+                    tvDev[index]["price"],
+                    tvDev[index]["name"],
+                    tvDev[index]["imag"],
+                    
+                  );
+
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(
+                      content: Text("Added to cart ✅"),
+                      duration: Duration(seconds: 1),
+                    ),
+                  );
                 },
                 color: Colors.blue,
-                minWidth: 1000,
-
+                minWidth: double.infinity,
                 child: Text(
-                  "add cart",
-                  style: TextStyle(fontSize: 25, color: Colors.white),
+                  "Add Cart",
+                  style: TextStyle(fontSize: 18, color: Colors.white),
                 ),
               ),
             ],
@@ -46,4 +59,5 @@ class Tv extends StatelessWidget {
       },
     );
   }
+
 }
