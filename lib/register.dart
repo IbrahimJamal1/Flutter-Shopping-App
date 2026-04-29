@@ -104,7 +104,7 @@ class _RegisterState extends State<Register> {
                     return null;
                   },
                   decoration: InputDecoration(
-                    hintText: "Emain",
+                    hintText: "Email",
                     suffixIcon: Icon(Icons.mail),
                     enabledBorder: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(30),

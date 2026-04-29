@@ -122,7 +122,7 @@ class _HomeState extends State<Home> {
                       Navigator.of(context).pushNamed("home");
                     },
                     child: Text(
-                      "Proudects",
+                      "Prouducts",
                       style: TextStyle(fontSize: 25, color: Colors.white),
                     ),
                   ),
