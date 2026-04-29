@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:ecommerce/providerapp.dart';
 
-
 class Login extends StatefulWidget {
   const Login({super.key});
 
@@ -15,7 +14,7 @@ class _LoginState extends State<Login> {
   TextEditingController passw = TextEditingController();
 
   bool remb = false;
-  bool obscure = true; 
+  bool obscure = true;
 
   @override
   Widget build(BuildContext context) {
@@ -43,7 +42,6 @@ class _LoginState extends State<Login> {
 
             SizedBox(height: 30),
 
-            
             Padding(
               padding: EdgeInsets.all(10),
               child: TextField(
@@ -51,8 +49,7 @@ class _LoginState extends State<Login> {
                 decoration: InputDecoration(
                   filled: true,
                   fillColor: Colors.white,
-                  prefixIcon:
-                      Icon(Icons.email, color: Color(0xFF0D47A1)),
+                  prefixIcon: Icon(Icons.email, color: Color(0xFF0D47A1)),
                   hintText: "Email",
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(15),
@@ -69,14 +66,13 @@ class _LoginState extends State<Login> {
                 decoration: InputDecoration(
                   filled: true,
                   fillColor: Colors.white,
-                  prefixIcon:
-                      Icon(Icons.lock, color: Color(0xFF0D47A1)),
+                  prefixIcon: Icon(Icons.lock, color: Color(0xFF0D47A1)),
                   hintText: "Password",
 
                   suffixIcon: IconButton(
-                    icon: Icon(obscure
-                        ? Icons.visibility
-                        : Icons.visibility_off),
+                    icon: Icon(
+                      obscure ? Icons.visibility : Icons.visibility_off,
+                    ),
                     onPressed: () {
                       setState(() {
                         obscure = !obscure;
@@ -110,23 +106,18 @@ class _LoginState extends State<Login> {
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(12),
               ),
-              child: Text("Login",
-              style: TextStyle(color: Colors.white)),
+              child: Text("Login", style: TextStyle(color: Colors.white)),
               onPressed: () {
                 if (email.text == "ibrahim@gmail.com" &&
-                  passw.text == "123") {
+                    passw.text == "123456a") {
                   String userName = email.text.split('@')[0];
-                  context.read<UserProvider>().login(
-                    userName,
-                    email.text
-                  );
+                  context.read<UserProvider>().login(userName, email.text);
 
                   Navigator.of(context).pushReplacementNamed("home");
-
                 } else {
                   showError(context);
                 }
-              }
+              },
             ),
 
             SizedBox(height: 15),
@@ -138,8 +129,7 @@ class _LoginState extends State<Login> {
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(12),
               ),
-              child: Text("Reset",
-                  style: TextStyle(color: Colors.white)),
+              child: Text("Reset", style: TextStyle(color: Colors.white)),
               onPressed: () {
                 email.clear();
                 passw.clear();
@@ -156,8 +146,7 @@ class _LoginState extends State<Login> {
       context: context,
       builder: (context) {
         return AlertDialog(
-          title: Text("Error",
-            style: TextStyle(color: Colors.red)),
+          title: Text("Error", style: TextStyle(color: Colors.red)),
           content: Text("Email or Password not correct"),
         );
       },

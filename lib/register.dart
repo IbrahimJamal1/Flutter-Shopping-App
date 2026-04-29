@@ -168,6 +168,7 @@ class _RegisterState extends State<Register> {
                           child: MaterialButton(
                             onPressed: () {
                               if (formkey.currentState!.validate()) {
+                                
                                 name.clear();
                                 phone.clear();
                                 mail.clear();
