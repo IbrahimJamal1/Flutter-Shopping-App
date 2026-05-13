@@ -1,5 +1,6 @@
 import 'package:ecommerce/cart.dart';
 import 'package:ecommerce/home.dart';
+import 'package:ecommerce/loading.dart';
 import 'package:ecommerce/login.dart';
 import 'package:ecommerce/phone.dart';
 import 'package:ecommerce/register.dart';
@@ -142,6 +143,8 @@ class MyApp extends StatelessWidget {
           elevation: 0,
         ),
       ),
+      
+      home: Loadingpage(),
 
       routes: {
         "main": (context) => Intropage(),
@@ -150,10 +153,9 @@ class MyApp extends StatelessWidget {
         "home": (context) => Home(),
         "cart":(context) => Mycart(),
         "phone":(context) => Phone(),
+        "load":(context) => Loadingpage(),
       },
 
-      home: Home(),
-      
     );
   }
 }
