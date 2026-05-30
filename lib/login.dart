@@ -17,129 +17,182 @@ class _LoginState extends State<Login> {
   bool obscure = true;
 
   @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Color(0xFFF5F5F5),
-
-      appBar: AppBar(
-        title: Text("MegaDevices"),
-        backgroundColor: Color(0xFF0D47A1),
-      ),
-
-      body: SingleChildScrollView(
-        child: Column(
-          children: [
-            SizedBox(height: 40),
-
-            Text(
-              "Let's get started",
-              style: TextStyle(
-                fontSize: 28,
-                color: Color(0xFF0D47A1),
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-
-            SizedBox(height: 30),
-
-            Padding(
-              padding: EdgeInsets.all(10),
-              child: TextField(
-                controller: email,
-                decoration: InputDecoration(
-                  filled: true,
-                  fillColor: Colors.white,
-                  prefixIcon: Icon(Icons.email, color: Color(0xFF0D47A1)),
-                  hintText: "Email",
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(15),
-                  ),
-                ),
-              ),
-            ),
-
-            Padding(
-              padding: EdgeInsets.all(10),
-              child: TextField(
-                controller: passw,
-                obscureText: obscure,
-                decoration: InputDecoration(
-                  filled: true,
-                  fillColor: Colors.white,
-                  prefixIcon: Icon(Icons.lock, color: Color(0xFF0D47A1)),
-                  hintText: "Password",
-
-                  suffixIcon: IconButton(
-                    icon: Icon(
-                      obscure ? Icons.visibility : Icons.visibility_off,
-                    ),
-                    onPressed: () {
-                      setState(() {
-                        obscure = !obscure;
-                      });
-                    },
-                  ),
-
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(15),
-                  ),
-                ),
-              ),
-            ),
-
-            CheckboxListTile(
-              value: remb,
-              onChanged: (val) {
-                setState(() {
-                  remb = val!;
-                });
-              },
-              title: Text("Remember me"),
-            ),
-
-            SizedBox(height: 10),
-
-            MaterialButton(
-              minWidth: 200,
-              height: 50,
-              color: Color(0xFF1976D2),
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(12),
-              ),
-              child: Text("Login", style: TextStyle(color: Colors.white)),
-              onPressed: () {
-                if (email.text == "ibrahim@gmail.com" &&
-                    passw.text == "123456a") {
-                  String userName = email.text.split('@')[0];
-                  context.read<UserProvider>().login(userName, email.text);
-
-                  Navigator.of(context).pushReplacementNamed("home");
-                } else {
-                  showError(context);
-                }
-              },
-            ),
-
-            SizedBox(height: 15),
-
-            MaterialButton(
-              minWidth: 200,
-              height: 50,
-              color: Colors.red,
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(12),
-              ),
-              child: Text("Reset", style: TextStyle(color: Colors.white)),
-              onPressed: () {
-                email.clear();
-                passw.clear();
-              },
-            ),
-          ],
+Widget build(BuildContext context) {
+  return Scaffold(
+    body: Container(
+      decoration: const BoxDecoration(
+        gradient: LinearGradient(
+          colors: [Color(0xFF0D47A1), Color(0xFF42A5F5)],
+          begin: Alignment.topLeft,
+          end: Alignment.bottomRight,
         ),
       ),
-    );
-  }
+      child: Center(
+        child: SingleChildScrollView(
+          child: Padding(
+            padding: const EdgeInsets.all(20),
+            child: Card(
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(20),
+              ),
+              elevation: 10,
+              child: Padding(
+                padding: const EdgeInsets.all(20),
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+
+                    const Text(
+                      "MegaDevices",
+                      style: TextStyle(
+                        fontSize: 28,
+                        fontWeight: FontWeight.bold,
+                        color: Color(0xFF0D47A1),
+                      ),
+                    ),
+
+                    const SizedBox(height: 10),
+
+                    const Text(
+                      "Welcome Back 👋",
+                      style: TextStyle(color: Colors.grey),
+                    ),
+
+                    const SizedBox(height: 25),
+
+                    // Email
+                    TextField(
+                      controller: email,
+                      decoration: InputDecoration(
+                        prefixIcon: const Icon(Icons.email),
+                        hintText: "Email",
+                        filled: true,
+                        fillColor: Colors.grey[100],
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(15),
+                          borderSide: BorderSide.none,
+                        ),
+                      ),
+                    ),
+
+                    const SizedBox(height: 15),
+
+                    // Password
+                    TextField(
+                      controller: passw,
+                      obscureText: obscure,
+                      decoration: InputDecoration(
+                        prefixIcon: const Icon(Icons.lock),
+                        suffixIcon: IconButton(
+                          icon: Icon(
+                            obscure
+                                ? Icons.visibility
+                                : Icons.visibility_off,
+                          ),
+                          onPressed: () {
+                            setState(() {
+                              obscure = !obscure;
+                            });
+                          },
+                        ),
+                        hintText: "Password",
+                        filled: true,
+                        fillColor: Colors.grey[100],
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(15),
+                          borderSide: BorderSide.none,
+                        ),
+                      ),
+                    ),
+
+                    CheckboxListTile(
+                      value: remb,
+                      onChanged: (val) {
+                        setState(() => remb = val!);
+                      },
+                      controlAffinity: ListTileControlAffinity.leading,
+                      title: const Text("Remember me"),
+                    ),
+
+                    const SizedBox(height: 10),
+
+                    // Login Button
+                    SizedBox(
+                      width: double.infinity,
+                      height: 50,
+                      child: ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: const Color(0xFF0D47A1),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(12),
+                          ),
+                        ),
+                        onPressed: () {
+                          if (email.text == "ibrahim@gmail.com" &&
+                              passw.text == "123456a") {
+                            String userName =
+                                email.text.split('@')[0];
+
+                            context
+                                .read<UserProvider>()
+                                .login(userName, email.text);
+
+                            Navigator.of(context)
+                                .pushReplacementNamed("home");
+                          } else {
+                            showError(context);
+                          }
+                        },
+                        child: const Text(
+                          "LOGIN",
+                          style: TextStyle(color: Colors.white),
+                        ),
+                      ),
+                    ),
+
+                    const SizedBox(height: 15),
+
+                    // Social login
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        CircleAvatar(
+                          backgroundColor: Colors.white,
+                          child: IconButton(
+                            onPressed: () {},
+                            icon: Image.asset('images/google.jpg'),
+                          ),
+                        ),
+                        const SizedBox(width: 10),
+                        CircleAvatar(
+                          backgroundColor: Colors.white,
+                          child: IconButton(
+                            onPressed: () {},
+                            icon: Image.asset('images/facebook.png'),
+                          ),
+                        ),
+                      ],
+                    ),
+
+                    const SizedBox(height: 10),
+
+                    TextButton(
+                      onPressed: () {
+                        email.clear();
+                        passw.clear();
+                      },
+                      child: const Text("Reset"),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ),
+        ),
+      ),
+    ),
+  );
+}
 
   void showError(BuildContext context) {
     showDialog(
