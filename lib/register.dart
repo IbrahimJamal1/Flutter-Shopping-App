@@ -33,12 +33,6 @@ class _RegisterState extends State<Register> {
         "uid": uid,
       });
 
-      //  Success message
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text("Account Created Successfully")),
-      );
-
-      //  Navigate
       Navigator.pushReplacementNamed(context, "login");
     } on FirebaseAuthException catch (e) {
       ScaffoldMessenger.of(
