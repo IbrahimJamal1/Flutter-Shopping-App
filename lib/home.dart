@@ -1,4 +1,5 @@
 import 'package:ecommerce/tv.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:ecommerce/main.dart';
 import 'package:provider/provider.dart';
@@ -53,176 +54,254 @@ class _HomeState extends State<Home> {
       ),
 
       appBar: AppBar(
-        title: Text("MegaDevices"),
-        backgroundColor: Color(0xFF0D47A1),
+        backgroundColor: Colors.white,
+        elevation: 0,
+        centerTitle: true,
+        title: const Text(
+          "MegaDevices",
+          style: TextStyle(
+            color: Colors.black,
+            fontSize: 24,
+            fontWeight: FontWeight.bold,
+            letterSpacing: 1,
+          ),
+        ),
+        leading: Builder(
+          builder: (context) => IconButton(
+            icon: const Icon(
+              Icons.menu_rounded,
+              color: Colors.black,
+              size: 30,
+            ),
+            onPressed: () {
+              Scaffold.of(context).openDrawer();
+            },
+          ),
+        ),
         actions: [
           IconButton(
             onPressed: () {
-              showSearch(context: context, delegate: Search());
+              showSearch(
+                context: context,
+                delegate: Search(),
+              );
             },
-            icon: Icon(Icons.search, size: 30),
+            icon: const Icon(
+              Icons.search_rounded,
+              color: Colors.black,
+              size: 28,
+            ),
           ),
-          IconButton(
-            onPressed: () {
-              Navigator.pushNamed(context, "cart");
-            },
-            icon: Icon(Icons.shopping_cart, size: 30),
+
+          Container(
+            margin: const EdgeInsets.only(right: 10),
+            child: Stack(
+              children: [
+                IconButton(
+                  onPressed: () {
+                    Navigator.pushNamed(context, "cart");
+                  },
+                  icon: const Icon(
+                    Icons.shopping_bag_outlined,
+                    color: Colors.black,
+                    size: 28,
+                  ),
+                ),
+
+                Positioned(
+                  right: 5,
+                  top: 5,
+                  child: Container(
+                    padding: const EdgeInsets.all(4),
+                    decoration: const BoxDecoration(
+                      color: Colors.red,
+                      shape: BoxShape.circle,
+                    ),
+                    child: const Text(
+                      "0",
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 10,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ),
+                ),
+              ],
+            ),
           ),
         ],
       ),
 
       drawer: Drawer(
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Column(
-              children: [
-                Container(
-                  color: Color(0xFF0D47A1),
-                  child: ListTile(
-                    contentPadding: EdgeInsets.all(20),
-                    title: Text(
-                      user.name,
-                      style: TextStyle(color: Colors.white, fontSize: 20),
-                    ),
-                    subtitle: Text(
-                      user.email,
-                      style: TextStyle(color: Colors.white70),
-                    ),
-                    trailing: CircleAvatar(
-                      radius: 30,
-                      child: Icon(Icons.person),
-                    ),
-                  ),
-                ),
 
-                Container(
-                  color: Colors.lightBlue,
-                  width: 1000,
-                  margin: EdgeInsets.all(20),
-                  padding: EdgeInsets.all(5),
-                  child: MaterialButton(
-                    onPressed: () {
-                      Navigator.of(context).pushNamed("main");
-                    },
-                    child: Text(
-                      "Add Account",
-                      style: TextStyle(fontSize: 25, color: Colors.white),
-                    ),
-                  ),
-                ),
-
-                Container(
-                  color: Colors.lightBlue,
-                  width: 1000,
-                  margin: EdgeInsets.all(20),
-                  padding: EdgeInsets.all(5),
-                  child: MaterialButton(
-                    onPressed: () {
-                      Navigator.of(context).pushNamed("home");
-                    },
-                    child: Text(
-                      "Prouducts",
-                      style: TextStyle(fontSize: 25, color: Colors.white),
-                    ),
-                  ),
-                ),
-
-                Container(
-                  color: Colors.lightBlue,
-                  width: 1000,
-                  margin: EdgeInsets.all(20),
-                  padding: EdgeInsets.all(5),
-                  child: MaterialButton(
-                    child: Text(
-                      "About",
-                      style: TextStyle(fontSize: 25, color: Colors.white),
-                    ),
-                    onPressed: () {
-                      showDialog(
-                        context: context,
-                        builder: (context) {
-                          return AlertDialog(
-                            backgroundColor: Color(0xFF0D47A1),
-                            title: Text(
-                              "About Us",
-                              style: TextStyle(color: Colors.white),
-                            ),
-                            content: Text(
-                              "eng.ibrahim gamal\nphone:01099687160\nemail: ibrahimgamal932@gmail.com",
-                              style: TextStyle(color: Colors.white),
-                            ),
-                          );
-                        },
-                      );
-                    },
-                  ),
-                ),
-
-                Container(
-                  color: Colors.lightBlue,
-                  width: 1000,
-                  margin: EdgeInsets.all(20),
-                  padding: EdgeInsets.all(5),
-                  child: MaterialButton(
-                    onPressed: () {
-                      showModalBottomSheet(
-                        context: context,
-                        builder: (context) {
-                          return StatefulBuilder(
-                            builder: (context, setStateSheet) {
-                              return Container(
-                                height: 150,
-                                color: Colors.white,
-                                child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: List.generate(5, (index) {
-                                    return IconButton(
-                                      iconSize: 40,
-                                      onPressed: () {
-                                        setStateSheet(() {
-                                          rating = index + 1;
-                                        });
-                                      },
-                                      icon: Icon(
-                                        Icons.star,
-                                        color: index < rating
-                                            ? Colors.amber
-                                            : Colors.grey,
-                                      ),
-                                    );
-                                  }),
-                                ),
-                              );
-                            },
-                          );
-                        },
-                      );
-                    },
-
-                    child: Text(
-                      "Rating",
-                      style: TextStyle(fontSize: 25, color: Colors.white),
-                    ),
-                  ),
-                ),
-              ],
-            ),
-
+            /// HEADER
             Container(
-              margin: EdgeInsets.all(10),
-              child: ListTile(
-                tileColor: Colors.red,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(10),
-                ),
-                title: Text("Log out", style: TextStyle(color: Colors.white)),
-                trailing: Icon(Icons.logout, color: Colors.white),
-                onTap: () {
-                  context.read<UserProvider>().logout();
-                },
+              width: double.infinity,
+              padding: const EdgeInsets.only(top: 60, bottom: 20),
+              color: const Color(0xFF0D47A1),
+              child: Column(
+                children: [
+
+                  const CircleAvatar(
+                    radius: 38,
+                    backgroundColor: Colors.white,
+                    child: Icon(
+                      Icons.person,
+                      size: 45,
+                      color: Color(0xFF0D47A1),
+                    ),
+                  ),
+
+                  const SizedBox(height: 10),
+
+                  Text(
+                    user.name,
+                    style: const TextStyle(
+                      color: Colors.white,
+                      fontSize: 19,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+
+                  const SizedBox(height: 5),
+
+                  Text(
+                    user.email,
+                    style: const TextStyle(
+                      color: Colors.white70,
+                      fontSize: 13,
+                    ),
+                  ),
+                ],
               ),
             ),
+
+            const SizedBox(height: 10),
+
+            /// PRODUCTS
+            ListTile(
+              leading: const Icon(Icons.home, color: Color(0xFF0D47A1)),
+              title: const Text("Products"),
+              onTap: () {
+                Navigator.of(context).pushNamed("home");
+              },
+            ),
+
+            /// ADD ACCOUNT
+            ListTile(
+              leading: const Icon(Icons.person_add_alt_1, color: Color(0xFF0D47A1)),
+              title: const Text("Add Account"),
+              onTap: () {
+                Navigator.of(context).pushNamed("main");
+              },
+            ),
+
+            /// ABOUT
+            ListTile(
+              leading: const Icon(Icons.info_outline, color: Color(0xFF0D47A1)),
+              title: const Text("About"),
+              onTap: () {
+                showDialog(
+                  context: context,
+                  builder: (context) {
+                    return AlertDialog(
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(15),
+                      ),
+                      title: const Text("About Us"),
+                      content: const Text(
+                        "Eng. Ibrahim Gamal\n"
+                        "📞 01099687160\n"
+                        "📧 ibrahimgamal932@gmail.com",
+                      ),
+                    );
+                  },
+                );
+              },
+            ),
+
+            /// RATING
+            ListTile(
+              leading: const Icon(Icons.star_border, color: Color(0xFF0D47A1)),
+              title: const Text("Rating"),
+              onTap: () {
+                showModalBottomSheet(
+                  context: context,
+                  shape: const RoundedRectangleBorder(
+                    borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
+                  ),
+                  builder: (context) {
+                    return StatefulBuilder(
+                      builder: (context, setStateSheet) {
+                        return SizedBox(
+                          height: 140,
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: List.generate(5, (index) {
+                              return IconButton(
+                                iconSize: 35,
+                                onPressed: () {
+                                  setStateSheet(() {
+                                    rating = index + 1;
+                                  });
+                                },
+                                icon: Icon(
+                                  Icons.star,
+                                  color: index < rating
+                                      ? Colors.amber
+                                      : Colors.grey,
+                                ),
+                              );
+                            }),
+                          ),
+                        );
+                      },
+                    );
+                  },
+                );
+              },
+            ),
+
+            const Spacer(),
+
+            /// LOGOUT
+            Padding(
+              padding: const EdgeInsets.all(15),
+              child: InkWell(
+
+                onTap: () async {
+                  context.read<UserProvider>().logout();
+                  await FirebaseAuth.instance.signOut();
+
+                },
+                child: Container(
+                  padding: const EdgeInsets.symmetric(vertical: 12),
+                  decoration: BoxDecoration(
+                    color: Colors.red,
+                    borderRadius: BorderRadius.circular(12),
+                  ),
+                  child: const Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Icon(Icons.logout, color: Colors.white),
+                      SizedBox(width: 10),
+                      Text(
+                        "Log Out",
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ),
+
           ],
         ),
       ),
@@ -238,48 +317,111 @@ class LaptopScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GridView.builder(
-      padding: EdgeInsets.all(10),
+      padding: const EdgeInsets.all(12),
       itemCount: laptopDev.length,
-      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
         crossAxisCount: 2,
-        crossAxisSpacing: 10,
-        mainAxisSpacing: 10,
-        childAspectRatio: 0.75,
+        crossAxisSpacing: 12,
+        mainAxisSpacing: 12,
+        childAspectRatio: 0.68,
       ),
       itemBuilder: (context, index) {
-        return Card(
+        return Container(
+          decoration: BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.circular(15),
+            boxShadow: [
+              BoxShadow(
+                color: Colors.black.withOpacity(0.1),
+                blurRadius: 8,
+                offset: const Offset(0, 4),
+              ),
+            ],
+          ),
           child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
+
+              /// IMAGE
               Expanded(
-                child: Image.asset(
-                  laptopDev[index]["imag"],
-                  fit: BoxFit.cover,
-                  width: double.infinity,
+                child: ClipRRect(
+                  borderRadius: const BorderRadius.only(
+                    topLeft: Radius.circular(15),
+                    topRight: Radius.circular(15),
+                  ),
+                  child: Image.asset(
+                    laptopDev[index]["imag"],
+                    width: double.infinity,
+                    fit: BoxFit.cover,
+                  ),
                 ),
               ),
-              Text(laptopDev[index]["name"]),
-              Text("${laptopDev[index]["price"]} \$"),
-              MaterialButton(
-                onPressed: () {
-                  context.read<CartProvider>().addcart(
-                    laptopDev[index]["price"],
-                    laptopDev[index]["name"],
-                    laptopDev[index]["imag"],
-                    
-                  );
 
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    SnackBar(
-                      content: Text("Added to cart ✅"),
-                      duration: Duration(seconds: 1),
-                    ),
-                  );
-                },
-                color: Colors.blue,
-                minWidth: double.infinity,
+              const SizedBox(height: 8),
+
+              /// NAME
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 8),
                 child: Text(
-                  "Add Cart",
-                  style: TextStyle(fontSize: 18, color: Colors.white),
+                  laptopDev[index]["name"],
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  style: const TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 14,
+                  ),
+                ),
+              ),
+
+              const SizedBox(height: 4),
+
+              /// PRICE
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 8),
+                child: Text(
+                  "${laptopDev[index]["price"]} \$",
+                  style: const TextStyle(
+                    color: Colors.green,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ),
+
+              const SizedBox(height: 8),
+
+              /// BUTTON
+              SizedBox(
+                width: double.infinity,
+                child: MaterialButton(
+                  onPressed: () {
+                    context.read<CartProvider>().addcart(
+                      laptopDev[index]["price"],
+                      laptopDev[index]["name"],
+                      laptopDev[index]["imag"],
+                    );
+
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      const SnackBar(
+                        content: Text("Added to cart ✅"),
+                        duration: Duration(seconds: 1),
+                      ),
+                    );
+                  },
+                  color: const Color(0xFF0D47A1),
+                  shape: const RoundedRectangleBorder(
+                    borderRadius: BorderRadius.only(
+                      bottomLeft: Radius.circular(15),
+                      bottomRight: Radius.circular(15),
+                    ),
+                  ),
+                  child: const Text(
+                    "Add to Cart",
+                    style: TextStyle(
+                      fontSize: 14,
+                      color: Colors.white,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
                 ),
               ),
             ],

@@ -25,6 +25,7 @@ class _LoginState extends State<Login> {
       context.read<UserProvider>().login(email.text.split('@')[0], email.text);
 
       Navigator.of(context).pushReplacementNamed("home");
+      
     } on FirebaseAuthException catch (e) {
       showError(context, e.message ?? "Login failed");
     }
@@ -153,7 +154,10 @@ class _LoginState extends State<Login> {
                                       passw.text.isNotEmpty) {
                                     await login();
                                   } else {
-                                    showError(context,"");
+                                    showError(
+                                      context,
+                                      "Email or Password is incorrect. Please try again.",
+                                    );
                                   }
                                 },
                           child: const Text(
@@ -211,13 +215,52 @@ class _LoginState extends State<Login> {
     );
   }
 
-  void showError(BuildContext context, String s) {
+  void showError(BuildContext context, String message) {
     showDialog(
       context: context,
       builder: (context) {
         return AlertDialog(
-          title: Text("Error", style: TextStyle(color: Colors.red)),
-          content: Text("Email or Password not correct"),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(20),
+          ),
+          title: Column(
+            children: [
+              Icon(
+                Icons.error_outline,
+                color: Colors.red,
+                size: 60,
+              ),
+              const SizedBox(height: 10),
+              const Text(
+                "Login Failed",
+                style: TextStyle(
+                  color: Colors.red,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+            ],
+          ),
+          content: Text(
+            message,
+            textAlign: TextAlign.center,
+            style: const TextStyle(fontSize: 16),
+          ),
+          actionsAlignment: MainAxisAlignment.center,
+          actions: [
+            ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                backgroundColor: Colors.red,
+                foregroundColor: Colors.white,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(12),
+                ),
+              ),
+              onPressed: () {
+                Navigator.pop(context);
+              },
+              child: const Text("OK"),
+            ),
+          ],
         );
       },
     );

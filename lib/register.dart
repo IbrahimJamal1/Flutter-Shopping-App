@@ -4,7 +4,6 @@ import 'package:firebase_auth/firebase_auth.dart';
 
 class Register extends StatefulWidget {
   const Register({super.key});
-
   @override
   State<Register> createState() => _RegisterState();
 }
@@ -33,7 +32,13 @@ class _RegisterState extends State<Register> {
         "uid": uid,
       });
 
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(SnackBar(content: Text("ADD Acount Successful")));
+      clearform();
       Navigator.pushReplacementNamed(context, "login");
+      
+
     } on FirebaseAuthException catch (e) {
       ScaffoldMessenger.of(
         context,
@@ -176,9 +181,9 @@ class _RegisterState extends State<Register> {
                           onPressed: () async {
                             if (formkey.currentState!.validate()) {
                               await register();
-                              // ignore: use_build_context_synchronously
-                              Navigator.of(context)
-                                .pushReplacementNamed("log");
+                              Navigator
+                                .pushReplacementNamed(context,"log");
+                              clearform();
                             }
                           },
                           style: ElevatedButton.styleFrom(
@@ -193,11 +198,7 @@ class _RegisterState extends State<Register> {
 
                       TextButton(
                         onPressed: () {
-                          name.clear();
-                          phone.clear();
-                          mail.clear();
-                          birth.clear();
-                          pass.clear();
+                          clearform();
                         },
                         child: const Text("Reset Form"),
                       ),
@@ -211,4 +212,13 @@ class _RegisterState extends State<Register> {
       ),
     );
   }
+
+  void clearform() {
+    name.clear();
+    phone.clear();
+    mail.clear();
+    birth.clear();
+    pass.clear();
+  }
+
 }
