@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:ecommerce/providerapp.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 
 class Login extends StatefulWidget {
   const Login({super.key});
@@ -25,12 +26,39 @@ class _LoginState extends State<Login> {
       context.read<UserProvider>().login(email.text.split('@')[0], email.text);
 
       Navigator.of(context).pushReplacementNamed("home");
-      
     } on FirebaseAuthException catch (e) {
       showError(context, e.message ?? "Login failed");
     }
 
     setState(() => loading = false);
+  }
+
+  Future<void> signInWithGoogle(BuildContext context) async {
+    try {
+      await GoogleSignIn.instance.initialize(
+        serverClientId:
+          '897787476757-kea147aosna41cha999rqai0pbkogvu9.apps.googleusercontent.com',
+      );
+
+      final GoogleSignInAccount? googleUser = await GoogleSignIn.instance
+          .authenticate();
+
+      if (googleUser == null) {
+        return;
+      }
+
+      final GoogleSignInAuthentication googleAuth = googleUser.authentication;
+
+      final credential = GoogleAuthProvider.credential(
+        idToken: googleAuth.idToken,
+      );
+
+      await FirebaseAuth.instance.signInWithCredential(credential);
+
+      Navigator.of(context).pushReplacementNamed("home");
+    } catch (e) {
+      print("Google Sign-In Error: $e");
+    }
   }
 
   TextEditingController email = TextEditingController();
@@ -170,29 +198,34 @@ class _LoginState extends State<Login> {
                       const SizedBox(height: 15),
 
                       // Social login
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          CircleAvatar(
-                            backgroundColor: Colors.white,
-                            child: IconButton(
-                              onPressed: () {
-                                
-                              },
-                              icon: Image.asset('images/google.jpg'),
+                      MaterialButton(
+                        onPressed: () {
+                          signInWithGoogle(context);
+                        },
+                        color: const Color(0xFF0D47A1),
+                        elevation: 2,
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 20,
+                          vertical: 12,
+                        ),
+                        child: Row(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            Image.asset(
+                              "images/google.jpg",
+                              height: 24,
+                              width: 24,
                             ),
-                          ),
-                          const SizedBox(width: 10),
-                          CircleAvatar(
-                            backgroundColor: Colors.white,
-                            child: IconButton(
-                              onPressed: () {
-
-                              },
-                              icon: Image.asset('images/facebook.png'),
+                            const SizedBox(width: 10),
+                            const Text(
+                              "Login With Google",
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 16,
+                              ),
                             ),
-                          ),
-                        ],
+                          ],
+                        ),
                       ),
 
                       const SizedBox(height: 10),
@@ -225,11 +258,7 @@ class _LoginState extends State<Login> {
           ),
           title: Column(
             children: [
-              Icon(
-                Icons.error_outline,
-                color: Colors.red,
-                size: 60,
-              ),
+              Icon(Icons.error_outline, color: Colors.red, size: 60),
               const SizedBox(height: 10),
               const Text(
                 "Login Failed",

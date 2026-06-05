@@ -5,6 +5,7 @@ import 'package:ecommerce/main.dart';
 import 'package:provider/provider.dart';
 import 'package:ecommerce/providerapp.dart';
 import 'package:ecommerce/phone.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 
 class Home extends StatefulWidget {
   const Home({super.key});
@@ -275,8 +276,11 @@ class _HomeState extends State<Home> {
                 onTap: () async {
                   context.read<UserProvider>().logout();
                   await FirebaseAuth.instance.signOut();
-
+                  
+                  GoogleSignIn googleSignIn = GoogleSignIn.instance  ;
+                  googleSignIn.disconnect();
                 },
+
                 child: Container(
                   padding: const EdgeInsets.symmetric(vertical: 12),
                   decoration: BoxDecoration(
