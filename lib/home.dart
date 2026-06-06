@@ -279,6 +279,8 @@ class _HomeState extends State<Home> {
                   
                   GoogleSignIn googleSignIn = GoogleSignIn.instance  ;
                   googleSignIn.disconnect();
+
+                  Navigator.pushReplacementNamed(context, "log");
                 },
 
                 child: Container(

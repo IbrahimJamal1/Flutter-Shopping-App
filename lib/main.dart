@@ -1,6 +1,5 @@
 import 'package:ecommerce/cart.dart';
 import 'package:ecommerce/home.dart';
-import 'package:ecommerce/loading.dart';
 import 'package:ecommerce/login.dart';
 import 'package:ecommerce/phone.dart';
 import 'package:ecommerce/register.dart';
@@ -148,7 +147,7 @@ class MyApp extends StatelessWidget {
         ),
       ),
       
-      home: Loadingpage(),
+      home: Intropage(),
 
       routes: {
         "main": (context) => Intropage(),
@@ -157,28 +156,29 @@ class MyApp extends StatelessWidget {
         "home": (context) => Home(),
         "cart":(context) => Mycart(),
         "phone":(context) => Phone(),
-        "load":(context) => Loadingpage(),
       },
 
     );
   }
 }
-
 class Intropage extends StatelessWidget {
   const Intropage({super.key});
-
+   
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text("Welcome To App"),
+      floatingActionButton: FloatingActionButton(
+        onPressed: (){
+          Navigator.of(context).pushReplacementNamed("home");
+        },
+        backgroundColor: Colors.blue,
+        child: Text("SKIP",style: TextStyle(color: Colors.white),),
       ),
-
+      floatingActionButtonLocation: FloatingActionButtonLocation.endTop,
       body: Container(
         width: double.infinity,
         height: double.infinity,
-
-        decoration: BoxDecoration(
+        decoration: const BoxDecoration(
           image: DecorationImage(
             image: AssetImage("images/background.jpg"),
             fit: BoxFit.cover,
@@ -186,67 +186,83 @@ class Intropage extends StatelessWidget {
         ),
 
         child: Container(
-          padding: EdgeInsets.all(20),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Text(
-                "Welcome to our store! We offer high-quality devices at great prices.",
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                  fontSize: 24,
-                  color: Colors.white,
-                  fontWeight: FontWeight.bold,
-                  shadows: [
-                    Shadow(color: Colors.black, blurRadius: 10),
-                  ],
+
+          child: Padding(
+            padding: const EdgeInsets.all(20),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                
+                const Text(
+                  "Welcome to our Store",
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    fontSize: 32,
+                    color: Colors.blue,
+                    fontWeight: FontWeight.bold,
+                  ),
                 ),
-              ),
 
-              SizedBox(height: 40),
+                const SizedBox(height: 10),
 
-              Row(
-                children: [
-                  Expanded(
-                    child: MaterialButton(
-                      height: 50,
-                      onPressed: () {
-                        Navigator.of(context).pushNamed("regis");
-                      },
-                      color: Color(0xFF1976D2),
+                const Text(
+                  "High quality devices at the best prices",
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    fontSize: 20,
+                    color: Colors.blue,
+                  ),
+                ),
+
+                const SizedBox(height: 50),
+
+                // Register Button
+                SizedBox(
+                  width: double.infinity,
+                  height: 55,
+                  child: ElevatedButton(
+                    onPressed: () {
+                      Navigator.of(context).pushNamed("regis");
+                    },
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: const Color(0xFF1976D2),
                       shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(12),
-                      ),
-                      child: Text(
-                        "Register",
-                        style: TextStyle(
-                            fontSize: 20, color: Colors.white),
+                        borderRadius: BorderRadius.circular(15),
                       ),
                     ),
-                  ),
-
-                  SizedBox(width: 15),
-
-                  Expanded(
-                    child: MaterialButton(
-                      height: 50,
-                      onPressed: () {
-                        Navigator.of(context).pushNamed("log");
-                      },
-                      color: Color(0xFF1976D2),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(12),
-                      ),
-                      child: Text(
-                        "Login",
-                        style: TextStyle(
-                            fontSize: 20, color: Colors.white),
-                      ),
+                    child: const Text(
+                      "Create Account",
+                      style: TextStyle(fontSize: 18, color: Colors.white),
                     ),
                   ),
-                ],
-              ),
-            ],
+                ),
+
+                const SizedBox(height: 15),
+
+                // Login Button
+                SizedBox(
+                  width: double.infinity,
+                  height: 55,
+                  child: OutlinedButton(
+                    onPressed: () {
+                      Navigator.of(context).pushNamed("log");
+                    },
+                    style: OutlinedButton.styleFrom(
+                      side: const BorderSide(color: Colors.white),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(15),
+                      ),
+                    ),
+                    child: const Text(
+                      "Login",
+                      style: TextStyle(fontSize: 18, color: Colors.white),
+                    ),
+                  ),
+                ),
+
+                const SizedBox(height: 40),
+              ],
+            ),
           ),
         ),
       ),

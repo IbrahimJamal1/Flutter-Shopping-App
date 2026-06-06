@@ -37,7 +37,7 @@ class _LoginState extends State<Login> {
     try {
       await GoogleSignIn.instance.initialize(
         serverClientId:
-          '897787476757-kea147aosna41cha999rqai0pbkogvu9.apps.googleusercontent.com',
+            '897787476757-kea147aosna41cha999rqai0pbkogvu9.apps.googleusercontent.com',
       );
 
       final GoogleSignInAccount? googleUser = await GoogleSignIn.instance
@@ -153,13 +153,13 @@ class _LoginState extends State<Login> {
                         ),
                       ),
 
-                      CheckboxListTile(
-                        value: remb,
-                        onChanged: (val) {
-                          setState(() => remb = val!);
+                      InkWell(
+                        onTap: () async {
+                          FirebaseAuth.instance.sendPasswordResetEmail(
+                            email: email.text,
+                          );
                         },
-                        controlAffinity: ListTileControlAffinity.leading,
-                        title: const Text("Remember me"),
+                        child: Text("Forgetpassword?"),
                       ),
 
                       const SizedBox(height: 10),
