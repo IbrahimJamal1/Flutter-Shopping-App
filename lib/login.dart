@@ -113,6 +113,7 @@ class _LoginState extends State<Login> {
                       // Email
                       TextField(
                         controller: email,
+
                         decoration: InputDecoration(
                           prefixIcon: const Icon(Icons.email),
                           hintText: "Email",
@@ -155,11 +156,44 @@ class _LoginState extends State<Login> {
 
                       InkWell(
                         onTap: () async {
-                          FirebaseAuth.instance.sendPasswordResetEmail(
-                            email: email.text,
+                          
+                          if (email.text.isEmpty ) {
+                            showDialog(
+                            context: context,
+                            builder: (context) => AlertDialog(
+                              title: Text("Error"),
+                              content: Text("plese,Enter your Email"),
+                              actions: [
+                                TextButton(
+                                  onPressed: () => Navigator.pop(context),
+                                  child: Text("OK"),
+                                )
+                              ],
+                            ),
                           );
+                          } else {
+
+                            await FirebaseAuth.instance.sendPasswordResetEmail(
+                              email: email.text.trim(),
+                            );
+
+                            showDialog(
+                            context: context,
+                            builder: (context) => AlertDialog(
+                              title: Text("Success"),
+                              content: Text("Reset email sent successfully"),
+                              actions: [
+                                TextButton(
+                                  onPressed: () => Navigator.pop(context),
+                                  child: Text("OK"),
+                                )
+                              ],
+                            ),
+                          );
+                          }
+                          
                         },
-                        child: Text("Forgetpassword?"),
+                        child: Text("Forget password?"),
                       ),
 
                       const SizedBox(height: 10),
