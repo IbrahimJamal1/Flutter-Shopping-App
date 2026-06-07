@@ -15,18 +15,35 @@ class UserProvider extends ChangeNotifier {
     email = "MegaDevices@gmail.com";
     notifyListeners();
   }
-
 }
 
 class CartProvider extends ChangeNotifier {
-  String price = "" ;
-  String name ="" ;
-  String pathimg="";
+  String price = "";
+  String name = "";
+  String pathimg = "";
 
-  void addcart (String p,String n,String path){
-    price=p;
-    name=n;
-    pathimg=path;
+  List<Map<String, dynamic>> cartItems = [];
+
+  void addcart(dynamic price, String name, String image) {
+    
+    cartItems.add({"price": price, "name": name, "image": image});
+    
+    notifyListeners();
+  }
+
+  void clearcart() {
+    cartItems.clear();
+    notifyListeners();
+  }
+
+ int totalPrice() {
+    int total = 0;
+
+    for (var item in cartItems) {
+      total +=int.parse(item["price"]);
+    }
+
+    return total  ;
   }
 
 }

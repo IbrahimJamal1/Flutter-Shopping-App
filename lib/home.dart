@@ -1,3 +1,4 @@
+import 'package:ecommerce/laptop.dart';
 import 'package:ecommerce/tv.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -14,22 +15,23 @@ class Home extends StatefulWidget {
   State<Home> createState() => _HomeState();
 }
 
-List<Widget> bottomnavig = [
-
-  LaptopScreen(),
-  Tv(), 
-  Phone(),
-
-];
-
+List<Widget> bottomnavig = [LaptopScreen(), Tv(), Phone()];
 
 class _HomeState extends State<Home> {
+  
+  List cartItems = [];
+
+  void addToCart(Map product) {
+    cartItems.add(product);
+  }
+
   int rating = 0;
   int selectindec = 0;
   @override
-
   Widget build(BuildContext context) {
+    
     final user = context.watch<UserProvider>();
+
     return Scaffold(
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: selectindec,
@@ -71,11 +73,7 @@ class _HomeState extends State<Home> {
         ),
         leading: Builder(
           builder: (context) => IconButton(
-            icon: const Icon(
-              Icons.menu_rounded,
-              color: Colors.black,
-              size: 30,
-            ),
+            icon: const Icon(Icons.menu_rounded, color: Colors.black, size: 30),
             onPressed: () {
               Scaffold.of(context).openDrawer();
             },
@@ -84,10 +82,7 @@ class _HomeState extends State<Home> {
         actions: [
           IconButton(
             onPressed: () {
-              showSearch(
-                context: context,
-                delegate: Search(),
-              );
+              showSearch(context: context, delegate: Search());
             },
             icon: const Icon(
               Icons.search_rounded,
@@ -139,15 +134,13 @@ class _HomeState extends State<Home> {
       drawer: Drawer(
         child: Column(
           children: [
-
             /// HEADER
             Container(
               width: double.infinity,
-              padding: const EdgeInsets.only(top: 60, bottom: 20),
+              padding: const EdgeInsets.only(top: 50, bottom: 20),
               color: const Color(0xFF0D47A1),
               child: Column(
                 children: [
-
                   const CircleAvatar(
                     radius: 38,
                     backgroundColor: Colors.white,
@@ -164,7 +157,7 @@ class _HomeState extends State<Home> {
                     user.name,
                     style: const TextStyle(
                       color: Colors.white,
-                      fontSize: 19,
+                      fontSize: 20,
                       fontWeight: FontWeight.bold,
                     ),
                   ),
@@ -173,10 +166,7 @@ class _HomeState extends State<Home> {
 
                   Text(
                     user.email,
-                    style: const TextStyle(
-                      color: Colors.white70,
-                      fontSize: 13,
-                    ),
+                    style: const TextStyle(color: Colors.white70, fontSize: 17),
                   ),
                 ],
               ),
@@ -195,7 +185,10 @@ class _HomeState extends State<Home> {
 
             /// ADD ACCOUNT
             ListTile(
-              leading: const Icon(Icons.person_add_alt_1, color: Color(0xFF0D47A1)),
+              leading: const Icon(
+                Icons.person_add_alt_1,
+                color: Color(0xFF0D47A1),
+              ),
               title: const Text("Add Account"),
               onTap: () {
                 Navigator.of(context).pushNamed("main");
@@ -234,7 +227,9 @@ class _HomeState extends State<Home> {
                 showModalBottomSheet(
                   context: context,
                   shape: const RoundedRectangleBorder(
-                    borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
+                    borderRadius: BorderRadius.vertical(
+                      top: Radius.circular(20),
+                    ),
                   ),
                   builder: (context) {
                     return StatefulBuilder(
@@ -274,12 +269,11 @@ class _HomeState extends State<Home> {
             Padding(
               padding: const EdgeInsets.all(15),
               child: InkWell(
-
                 onTap: () async {
                   context.read<UserProvider>().logout();
                   await FirebaseAuth.instance.signOut();
-                  
-                  GoogleSignIn googleSignIn = GoogleSignIn.instance  ;
+
+                  GoogleSignIn googleSignIn = GoogleSignIn.instance;
                   googleSignIn.disconnect();
 
                   Navigator.pushReplacementNamed(context, "log");
@@ -309,133 +303,12 @@ class _HomeState extends State<Home> {
                 ),
               ),
             ),
-
           ],
         ),
       ),
 
       body: bottomnavig.elementAt(selectindec),
-    );
-  }
-}
-
-class LaptopScreen extends StatelessWidget {
-  const LaptopScreen({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return GridView.builder(
-      padding: const EdgeInsets.all(12),
-      itemCount: laptopDev.length,
-      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-        crossAxisCount: 2,
-        crossAxisSpacing: 12,
-        mainAxisSpacing: 12,
-        childAspectRatio: 0.68,
-      ),
-      itemBuilder: (context, index) {
-        return Container(
-          decoration: BoxDecoration(
-            color: Colors.white,
-            borderRadius: BorderRadius.circular(15),
-            boxShadow: [
-              BoxShadow(
-                color: Colors.black.withOpacity(0.1),
-                blurRadius: 8,
-                offset: const Offset(0, 4),
-              ),
-            ],
-          ),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-
-              /// IMAGE
-              Expanded(
-                child: ClipRRect(
-                  borderRadius: const BorderRadius.only(
-                    topLeft: Radius.circular(15),
-                    topRight: Radius.circular(15),
-                  ),
-                  child: Image.asset(
-                    laptopDev[index]["imag"],
-                    width: double.infinity,
-                    fit: BoxFit.cover,
-                  ),
-                ),
-              ),
-
-              const SizedBox(height: 8),
-
-              /// NAME
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 8),
-                child: Text(
-                  laptopDev[index]["name"],
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
-                  style: const TextStyle(
-                    fontWeight: FontWeight.bold,
-                    fontSize: 14,
-                  ),
-                ),
-              ),
-
-              const SizedBox(height: 4),
-
-              /// PRICE
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 8),
-                child: Text(
-                  "${laptopDev[index]["price"]} \$",
-                  style: const TextStyle(
-                    color: Colors.green,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-              ),
-
-              const SizedBox(height: 8),
-
-              /// BUTTON
-              SizedBox(
-                width: double.infinity,
-                child: MaterialButton(
-                  onPressed: () {
-                    context.read<CartProvider>().addcart(
-                      laptopDev[index]["price"],
-                      laptopDev[index]["name"],
-                      laptopDev[index]["imag"],
-                    );
-
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      const SnackBar(
-                        content: Text("Added to cart ✅"),
-                        duration: Duration(seconds: 1),
-                      ),
-                    );
-                  },
-                  color: const Color(0xFF0D47A1),
-                  shape: const RoundedRectangleBorder(
-                    borderRadius: BorderRadius.only(
-                      bottomLeft: Radius.circular(15),
-                      bottomRight: Radius.circular(15),
-                    ),
-                  ),
-                  child: const Text(
-                    "Add to Cart",
-                    style: TextStyle(
-                      fontSize: 14,
-                      color: Colors.white,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                ),
-              ),
-            ],
-          ),
-        );
-      },
+    
     );
   }
 }
@@ -474,13 +347,17 @@ class Search extends SearchDelegate {
       return item["name"].toLowerCase().contains(query.toLowerCase());
     }).toList();
 
-    filtered.addAll(phoneDev.where((item) {
-      return item["name"].toLowerCase().contains(query.toLowerCase());
-    }).toList());
+    filtered.addAll(
+      phoneDev.where((item) {
+        return item["name"].toLowerCase().contains(query.toLowerCase());
+      }).toList(),
+    );
 
-    filtered.addAll(tvDev.where((item) {
-      return item["name"].toLowerCase().contains(query.toLowerCase());
-    }).toList());
+    filtered.addAll(
+      tvDev.where((item) {
+        return item["name"].toLowerCase().contains(query.toLowerCase());
+      }).toList(),
+    );
 
     if (query.isEmpty) {
       return Center(child: Text("Search Prodects..."));

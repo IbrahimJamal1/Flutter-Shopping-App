@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:ecommerce/providerapp.dart';
+import 'package:provider/provider.dart';
 
 class Mycart extends StatelessWidget {
   const Mycart({super.key});
@@ -8,6 +9,7 @@ class Mycart extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final prod = context.watch<CartProvider>();
+    final user = context.watch<UserProvider>();
 
     return Scaffold(
       appBar: AppBar(
@@ -21,61 +23,34 @@ class Mycart extends StatelessWidget {
         child: Column(
           children: [
 
-            /// PRODUCT CARD
-            Container(
-              decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.circular(15),
-                boxShadow: [
-                  BoxShadow(
-                    color: Colors.black.withOpacity(0.1),
-                    blurRadius: 8,
-                    offset: const Offset(0, 4),
-                  ),
-                ],
+            GridView.builder(
+              shrinkWrap: true,
+              physics: const NeverScrollableScrollPhysics(),
+              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: 2,
               ),
-              child: Column(
-                children: [
-
-                  ClipRRect(
-                    borderRadius: const BorderRadius.only(
-                      topLeft: Radius.circular(15),
-                      topRight: Radius.circular(15),
-                    ),
-                    child: Image.asset(
-                      prod.pathimg,
-                      height: 200,
-                      width: double.infinity,
-                      fit: BoxFit.cover,
-                    ),
+              itemCount: prod.cartItems.length,
+              itemBuilder: (context, index) {
+                return Card(
+                  child: Column(
+                    children: [
+                      Expanded(
+                        child: Image.asset(
+                          prod.cartItems[index]["image"],
+                        ),
+                      ),
+                      Text(
+                        prod.cartItems[index]["name"],
+                      ),
+                      Text(
+                        prod.cartItems[index]["price"].toString(),
+                      ),
+                    ],
                   ),
-
-                  const SizedBox(height: 10),
-
-                  Text(
-                    prod.name,
-                    style: const TextStyle(
-                      fontSize: 22,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-
-                  const SizedBox(height: 5),
-
-                  Text(
-                    "${prod.price} EGP",
-                    style: const TextStyle(
-                      fontSize: 20,
-                      color: Colors.green,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-
-                  const SizedBox(height: 15),
-                ],
-              ),
+                );
+              },
             ),
-
+            
             const Spacer(),
 
             /// BUY BUTTON + DIALOG INLINE
@@ -105,7 +80,7 @@ class Mycart extends StatelessWidget {
                           ],
                         ),
                         content: Text(
-                          "Are you sure you want to buy ${prod.name} for ${prod.price} EGP?",
+                          "Are you sure you want to buy ${prod.totalPrice()} EGP? ${user.email} ",
                         ),
                         actions: [
                           TextButton(
@@ -121,7 +96,7 @@ class Mycart extends StatelessWidget {
                             ),
                             onPressed: () {
                               Navigator.pop(context);
-
+                              prod.clearcart();
                               ScaffoldMessenger.of(context).showSnackBar(
                                 const SnackBar(
                                   content: Text("Purchase Successful ✅"),
@@ -130,6 +105,7 @@ class Mycart extends StatelessWidget {
                               );
 
                               Navigator.pushReplacementNamed(context, "home");
+                            
                             },
                             child: const Text("Confirm"),
                           ),
