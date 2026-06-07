@@ -22,10 +22,12 @@ List<Widget> bottomnavig = [
 
 ];
 
+
 class _HomeState extends State<Home> {
   int rating = 0;
   int selectindec = 0;
   @override
+
   Widget build(BuildContext context) {
     final user = context.watch<UserProvider>();
     return Scaffold(

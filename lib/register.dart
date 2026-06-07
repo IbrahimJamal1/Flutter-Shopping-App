@@ -22,21 +22,20 @@ class _RegisterState extends State<Register> {
           );
 
       String uid = userCredential.user!.uid;
-
       // Save extra data in Firestore
       await FirebaseFirestore.instance.collection("users").doc(uid).set({
         "name": name.text.trim(),
         "phone": phone.text.trim(),
         "email": mail.text.trim(),
         "birth": birth.text.trim(),
-        "uid": uid,
       });
+
 
       ScaffoldMessenger.of(
         context,
       ).showSnackBar(SnackBar(content: Text("ADD Acount Successful")));
       clearform();
-      Navigator.pushReplacementNamed(context, "login");
+      Navigator.pushReplacementNamed(context, "log");
       
 
     } on FirebaseAuthException catch (e) {

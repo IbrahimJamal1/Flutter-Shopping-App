@@ -23,7 +23,7 @@ class _LoginState extends State<Login> {
         password: passw.text.trim(),
       );
 
-      context.read<UserProvider>().login(email.text.split('@')[0], email.text);
+      context.read<UserProvider>().login(email.text.split('@')[0], email.text);///////////
 
       Navigator.of(context).pushReplacementNamed("home");
     } on FirebaseAuthException catch (e) {
