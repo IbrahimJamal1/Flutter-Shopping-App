@@ -1,3 +1,4 @@
+import 'package:ecommerce/adminprod.dart';
 import 'package:ecommerce/cart.dart';
 import 'package:ecommerce/home.dart';
 import 'package:ecommerce/login.dart';
@@ -23,111 +24,111 @@ void main() async  {
   );
 }
 
-List laptopDev = [
-  {
-    "imag": "images/lapimage/image_1.jpg",
-    "name": "HP Pavilion 15",
-    "price": "1400"
-  },
-  {
-    "imag": "images/lapimage/image_2.jpg",
-    "name": "MacBook Air M3",
-    "price": "1099"
-  },
-  {
-    "imag": "images/lapimage/image_3.jpg",
-    "name": "Dell XPS 13",
-    "price": "1250"
-  },
-  {
-    "imag": "images/lapimage/image_4.jpg",
-    "name": "Lenovo Yoga 7i",
-    "price": "850"
-  },
-  {
-    "imag": "images/lapimage/image_5.jpg",
-    "name": "ASUS ROG Zephyrus G14",
-    "price": "1650"
-  },
+// List laptopDev = [
+//   {
+//     "imag": "images/lapimage/image_1.jpg",
+//     "name": "HP Pavilion 15",
+//     "price": "1400"
+//   },
+//   {
+//     "imag": "images/lapimage/image_2.jpg",
+//     "name": "MacBook Air M3",
+//     "price": "1099"
+//   },
+//   {
+//     "imag": "images/lapimage/image_3.jpg",
+//     "name": "Dell XPS 13",
+//     "price": "1250"
+//   },
+//   {
+//     "imag": "images/lapimage/image_4.jpg",
+//     "name": "Lenovo Yoga 7i",
+//     "price": "850"
+//   },
+//   {
+//     "imag": "images/lapimage/image_5.jpg",
+//     "name": "ASUS ROG Zephyrus G14",
+//     "price": "1650"
+//   },
   
-];
+// ];
 
-List phoneDev = [
-  {
-    "imag": "images/phone/imag_1.jpg",
-    "name": "iPhone 15",
-    "price": "999"
-  },
-  {
-    "imag": "images/phone/imag_2.jpg",
-    "name": "Samsung Galaxy S24",
-    "price": "899"
-  },
-  {
-    "imag": "images/phone/imag_3.jpg",
-    "name": "Google Pixel 8",
-    "price": "799"
-  },
-  {
-    "imag": "images/phone/imag_4.jpg",
-    "name": "OnePlus 12",
-    "price": "749"
-  },
-  {
-    "imag": "images/phone/imag_5.jpg",
-    "name": "Xiaomi 14",
-    "price": "699"
-  },
-  {
-  "imag": "images/phone/imag_6.jpg",
-  "name": "Xiaomi 14",
-  "price": "4758"
-  },
-  {
-    "imag": "images/phone/imag_7.jpg",
-    "name": "Xiaomi 14",
-    "price": "8000"
-  }
+// List phoneDev = [
+//   {
+//     "imag": "images/phone/imag_1.jpg",
+//     "name": "iPhone 15",
+//     "price": "999"
+//   },
+//   {
+//     "imag": "images/phone/imag_2.jpg",
+//     "name": "Samsung Galaxy S24",
+//     "price": "899"
+//   },
+//   {
+//     "imag": "images/phone/imag_3.jpg",
+//     "name": "Google Pixel 8",
+//     "price": "799"
+//   },
+//   {
+//     "imag": "images/phone/imag_4.jpg",
+//     "name": "OnePlus 12",
+//     "price": "749"
+//   },
+//   {
+//     "imag": "images/phone/imag_5.jpg",
+//     "name": "Xiaomi 14",
+//     "price": "699"
+//   },
+//   {
+//   "imag": "images/phone/imag_6.jpg",
+//   "name": "Xiaomi 14",
+//   "price": "4758"
+//   },
+//   {
+//     "imag": "images/phone/imag_7.jpg",
+//     "name": "Xiaomi 14",
+//     "price": "8000"
+//   }
 
-];
+// ];
 
-List tvDev = [
-  {
-    "imag": "images/tvimage/image_1.jpg",
-    "name": "Samsung 55 Smart TV",
-    "price": "600"
-  },
-  {
-    "imag": "images/tvimage/image_2.jpg",
-    "name": "LG OLED 65",
-    "price": "1200"
-  },
-  {
-    "imag": "images/tvimage/image_3.jpg",
-    "name": "Sony Bravia 50",
-    "price": "750"
-  },
-  {
-    "imag": "images/tvimage/image_4.jpg",
-    "name": "TCL 4K Smart TV",
-    "price": "450"
-  },
-  {
-    "imag": "images/tvimage/image_5.jpg",
-    "name": "Hisense 55 Inch",
-    "price": "500"
-  },
-  {
-    "imag": "images/tvimage/image_6.jpg",
-    "name": "Xiaomi Mi TV 4A",
-    "price": "400"
-  },
-  {
-    "imag": "images/tvimage/image_7.jpg",
-    "name": "Philips Ambilight 58",
-    "price": "800"
-  }
-];
+// List tvDev = [
+//   {
+//     "imag": "images/tvimage/image_1.jpg",
+//     "name": "Samsung 55 Smart TV",
+//     "price": "600"
+//   },
+//   {
+//     "imag": "images/tvimage/image_2.jpg",
+//     "name": "LG OLED 65",
+//     "price": "1200"
+//   },
+//   {
+//     "imag": "images/tvimage/image_3.jpg",
+//     "name": "Sony Bravia 50",
+//     "price": "750"
+//   },
+//   {
+//     "imag": "images/tvimage/image_4.jpg",
+//     "name": "TCL 4K Smart TV",
+//     "price": "450"
+//   },
+//   {
+//     "imag": "images/tvimage/image_5.jpg",
+//     "name": "Hisense 55 Inch",
+//     "price": "500"
+//   },
+//   {
+//     "imag": "images/tvimage/image_6.jpg",
+//     "name": "Xiaomi Mi TV 4A",
+//     "price": "400"
+//   },
+//   {
+//     "imag": "images/tvimage/image_7.jpg",
+//     "name": "Philips Ambilight 58",
+//     "price": "800"
+//   }
+// ];
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
@@ -147,7 +148,7 @@ class MyApp extends StatelessWidget {
         ),
       ),
       
-      home: Intropage(),
+      home: Home(),
 
       routes: {
         "main": (context) => Intropage(),
@@ -156,6 +157,7 @@ class MyApp extends StatelessWidget {
         "home": (context) => Home(),
         "cart":(context) => Mycart(),
         "phone":(context) => Phone(),
+        "admin":(context) => Admin(),
       },
 
     );
@@ -261,6 +263,8 @@ class Intropage extends StatelessWidget {
                 ),
 
                 const SizedBox(height: 40),
+
+
               ],
             ),
           ),

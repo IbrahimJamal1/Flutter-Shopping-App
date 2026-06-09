@@ -18,19 +18,12 @@ class Home extends StatefulWidget {
 List<Widget> bottomnavig = [LaptopScreen(), Tv(), Phone()];
 
 class _HomeState extends State<Home> {
-  
-  List cartItems = [];
-
-  void addToCart(Map product) {
-    cartItems.add(product);
-  }
-
   int rating = 0;
   int selectindec = 0;
   @override
   Widget build(BuildContext context) {
-    
     final user = context.watch<UserProvider>();
+    final prod = context.watch<CartProvider>();
 
     return Scaffold(
       bottomNavigationBar: BottomNavigationBar(
@@ -102,7 +95,7 @@ class _HomeState extends State<Home> {
                   icon: const Icon(
                     Icons.shopping_bag_outlined,
                     color: Colors.black,
-                    size: 28,
+                    size: 30,
                   ),
                 ),
 
@@ -115,11 +108,11 @@ class _HomeState extends State<Home> {
                       color: Colors.red,
                       shape: BoxShape.circle,
                     ),
-                    child: const Text(
-                      "0",
+                    child: Text(
+                      "${prod.cartItems.length}",
                       style: TextStyle(
                         color: Colors.white,
-                        fontSize: 10,
+                        fontSize: 15,
                         fontWeight: FontWeight.bold,
                       ),
                     ),
@@ -308,7 +301,6 @@ class _HomeState extends State<Home> {
       ),
 
       body: bottomnavig.elementAt(selectindec),
-    
     );
   }
 }
