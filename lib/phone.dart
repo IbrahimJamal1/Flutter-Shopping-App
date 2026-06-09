@@ -1,16 +1,39 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:ecommerce/providerapp.dart';
 import 'package:provider/provider.dart';
-import 'package:ecommerce/main.dart';
 
-class Phone extends StatelessWidget {
+class Phone extends StatefulWidget {
   const Phone({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  State<Phone> createState() => _PhoneState();
+}
+
+class _PhoneState extends State<Phone> {
+  List products = [];
+  @override
+   
+  void initState() {
+    super.initState();
+    getData();
+  }
+
+  Future<void> getData() async {
+    var data = await FirebaseFirestore.instance
+    .collection('Products')
+    .where('type', isEqualTo: 'Phone')
+    .get();
+    setState(() {
+      products = data.docs;
+    });
+
+  }
+
+   Widget build(BuildContext context) {
     return GridView.builder(
       padding: const EdgeInsets.all(12),
-      itemCount: phoneDev.length,
+      itemCount: products.length,
       gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
         crossAxisCount: 2,
         crossAxisSpacing: 12,
@@ -42,7 +65,7 @@ class Phone extends StatelessWidget {
                     topRight: Radius.circular(15),
                   ),
                   child: Image.asset(
-                    phoneDev[index]["imag"],
+                    products[index]["imag"],
                     width: double.infinity,
                     fit: BoxFit.cover,
                   ),
@@ -55,7 +78,7 @@ class Phone extends StatelessWidget {
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 8),
                 child: Text(
-                  phoneDev[index]["name"],
+                  products[index]["name"],
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
                   style: const TextStyle(
@@ -71,7 +94,7 @@ class Phone extends StatelessWidget {
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 8),
                 child: Text(
-                  "${phoneDev[index]["price"]} \$",
+                  "${products[index]["price"]} \$",
                   style: const TextStyle(
                     color: Colors.green,
                     fontWeight: FontWeight.bold,
@@ -87,9 +110,9 @@ class Phone extends StatelessWidget {
                 child: MaterialButton(
                   onPressed: () {
                     context.read<CartProvider>().addcart(
-                      phoneDev[index]["price"],
-                      phoneDev[index]["name"],
-                      phoneDev[index]["imag"],
+                      products[index]["price"],
+                      products[index]["name"],
+                      products[index]["imag"],
                     );
 
                     ScaffoldMessenger.of(context).showSnackBar(
@@ -121,5 +144,7 @@ class Phone extends StatelessWidget {
         );
       },
     );
+  
   }
+
 }

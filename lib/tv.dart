@@ -1,16 +1,41 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:ecommerce/main.dart';
 import 'package:ecommerce/providerapp.dart';
 import 'package:provider/provider.dart';
 
-class Tv extends StatelessWidget {
+
+class Tv extends StatefulWidget {
   const Tv({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  State<Tv> createState() => _TvState();
+}
+
+      
+class _TvState extends State<Tv> {
+  
+  List products = [];
+  @override
+
+  void initState() {
+    super.initState();
+    getData();
+  }
+
+  Future<void> getData() async {
+    var data = await FirebaseFirestore.instance
+    .collection('Products')
+    .where('type', isEqualTo: 'TV')
+    .get();
+    setState(() {
+      products = data.docs;
+    });
+
+  }
+    Widget build(BuildContext context) {
     return GridView.builder(
       padding: const EdgeInsets.all(12),
-      itemCount: tvDev.length,
+      itemCount: products.length,
       gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
         crossAxisCount: 2,
         crossAxisSpacing: 12,
@@ -42,7 +67,7 @@ class Tv extends StatelessWidget {
                     topRight: Radius.circular(15),
                   ),
                   child: Image.asset(
-                    tvDev[index]["imag"],
+                    products[index]["imag"],
                     width: double.infinity,
                     fit: BoxFit.cover,
                   ),
@@ -55,7 +80,7 @@ class Tv extends StatelessWidget {
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 8),
                 child: Text(
-                  tvDev[index]["name"],
+                  products[index]["name"],
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
                   style: const TextStyle(
@@ -71,7 +96,7 @@ class Tv extends StatelessWidget {
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 8),
                 child: Text(
-                  "${tvDev[index]["price"]} \$",
+                  "${products[index]["price"]} \$",
                   style: const TextStyle(
                     color: Colors.green,
                     fontWeight: FontWeight.bold,
@@ -87,9 +112,9 @@ class Tv extends StatelessWidget {
                 child: MaterialButton(
                   onPressed: () {
                     context.read<CartProvider>().addcart(
-                      tvDev[index]["price"],
-                      tvDev[index]["name"],
-                      tvDev[index]["imag"],
+                      products[index]["price"],
+                      products[index]["name"],
+                      products[index]["imag"],
                     );
 
                     ScaffoldMessenger.of(context).showSnackBar(
@@ -121,5 +146,7 @@ class Tv extends StatelessWidget {
         );
       },
     );
+  
   }
+
 }

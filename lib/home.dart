@@ -1,8 +1,8 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:ecommerce/laptop.dart';
 import 'package:ecommerce/tv.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:ecommerce/main.dart';
 import 'package:provider/provider.dart';
 import 'package:ecommerce/providerapp.dart';
 import 'package:ecommerce/phone.dart';
@@ -16,10 +16,28 @@ class Home extends StatefulWidget {
 }
 
 List<Widget> bottomnavig = [LaptopScreen(), Tv(), Phone()];
+List products = [];
 
 class _HomeState extends State<Home> {
   int rating = 0;
   int selectindec = 0;
+
+  @override
+
+  void initState() {
+    super.initState();
+    getData();
+  }
+
+  Future<void> getData() async {
+    var data = await FirebaseFirestore.instance
+    .collection('Products')
+    .get();
+    setState(() {
+      products = data.docs;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     final user = context.watch<UserProvider>();
@@ -75,7 +93,9 @@ class _HomeState extends State<Home> {
         actions: [
           IconButton(
             onPressed: () {
+
               showSearch(context: context, delegate: Search());
+            
             },
             icon: const Icon(
               Icons.search_rounded,
@@ -335,21 +355,9 @@ class Search extends SearchDelegate {
 
   @override
   Widget buildSuggestions(BuildContext context) {
-    List filtered = laptopDev.where((item) {
+    List filtered = products.where((item) {
       return item["name"].toLowerCase().contains(query.toLowerCase());
     }).toList();
-
-    filtered.addAll(
-      phoneDev.where((item) {
-        return item["name"].toLowerCase().contains(query.toLowerCase());
-      }).toList(),
-    );
-
-    filtered.addAll(
-      tvDev.where((item) {
-        return item["name"].toLowerCase().contains(query.toLowerCase());
-      }).toList(),
-    );
 
     if (query.isEmpty) {
       return Center(child: Text("Search Prodects..."));

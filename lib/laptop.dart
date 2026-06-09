@@ -1,16 +1,40 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:ecommerce/main.dart';
 import 'package:ecommerce/providerapp.dart';
 import 'package:provider/provider.dart';
 
-class LaptopScreen extends StatelessWidget {
+class LaptopScreen extends StatefulWidget {
   const LaptopScreen({super.key});
 
   @override
+  State<LaptopScreen> createState() => _LaptopScreenState();
+}
+
+class _LaptopScreenState extends State<LaptopScreen> {
+  List products = [];
+  @override
+
+  void initState() {
+    super.initState();
+    getData();
+  }
+
+  Future<void> getData() async {
+    var data = await FirebaseFirestore.instance
+    .collection('Products')
+    .where('type', isEqualTo: 'Laptop')
+    .get();
+    setState(() {
+      products = data.docs;
+    });
+
+  }
+
+
   Widget build(BuildContext context) {
     return GridView.builder(
       padding: const EdgeInsets.all(12),
-      itemCount: laptopDev.length,
+      itemCount: products.length,
       gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
         crossAxisCount: 2,
         crossAxisSpacing: 12,
@@ -41,20 +65,18 @@ class LaptopScreen extends StatelessWidget {
                     topRight: Radius.circular(15),
                   ),
                   child: Image.asset(
-                    laptopDev[index]["imag"],
+                    products[index]["imag"],
                     width: double.infinity,
                     fit: BoxFit.cover,
                   ),
                 ),
               ),
-
               const SizedBox(height: 8),
-
               /// NAME
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 8),
                 child: Text(
-                  laptopDev[index]["name"],
+                  products[index]["name"],
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
                   style: const TextStyle(
@@ -63,35 +85,29 @@ class LaptopScreen extends StatelessWidget {
                   ),
                 ),
               ),
-
               const SizedBox(height: 4),
-
               /// PRICE
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 8),
                 child: Text(
-                  "${laptopDev[index]["price"]} \$",
+                  "${products[index]["price"]} \$",
                   style: const TextStyle(
                     color: Colors.green,
                     fontWeight: FontWeight.bold,
                   ),
                 ),
               ),
-
               const SizedBox(height: 8),
-
               /// BUTTON
               SizedBox(
                 width: double.infinity,
                 child: MaterialButton(
                   onPressed: () {
-
                     context.read<CartProvider>().addcart(
-                      laptopDev[index]["price"],
-                      laptopDev[index]["name"],
-                      laptopDev[index]["imag"],
+                      products[index]["price"],
+                      products[index]["name"],
+                      products[index]["imag"],
                     );
-
                     ScaffoldMessenger.of(context).showSnackBar(
                       const SnackBar(
                         content: Text("Added to cart ✅"),
