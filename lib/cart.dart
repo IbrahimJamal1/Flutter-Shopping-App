@@ -1,12 +1,16 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:ecommerce/providerapp.dart';
 
 class Mycart extends StatelessWidget {
-  const Mycart({super.key});
+
+
+  Mycart({super.key});
 
   @override
   Widget build(BuildContext context) {
+    
     final prod = context.watch<CartProvider>();
     final user = context.watch<UserProvider>();
 
@@ -94,6 +98,18 @@ class Mycart extends StatelessWidget {
                               backgroundColor: Colors.green,
                             ),
                             onPressed: () {
+
+                              CollectionReference sales = FirebaseFirestore.instance.collection('sales');
+
+                              for (var i = 0; i < prod.cartItems.length; i++) {
+                                sales.add({
+                                'name': prod.cartItems[i]["name"],
+                                'price': prod.cartItems[i]["price"].toString(),
+                                'email':user.email,
+                                'nameuser':user.name,
+                                });
+                              }
+
                               Navigator.pop(context);
                               prod.clearcart();
                               ScaffoldMessenger.of(context).showSnackBar(

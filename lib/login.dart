@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -11,6 +12,8 @@ class Login extends StatefulWidget {
   State<Login> createState() => _LoginState();
 }
 
+List Users=[];
+
 class _LoginState extends State<Login> {
   bool loading = false;
 
@@ -23,7 +26,19 @@ class _LoginState extends State<Login> {
         password: passw.text.trim(),
       );
 
-      context.read<UserProvider>().login(email.text.split('@')[0], email.text);///////////
+      var data = await FirebaseFirestore.instance
+      .collection('users')
+      .where('email', isEqualTo: email.text.trim())
+      .get();
+      setState(() {
+        Users = data.docs;
+      });
+
+      if(Users.isNotEmpty){
+        context.read<UserProvider>().
+        login(Users[0]['name'], 
+        Users[0]['email']);
+      }
 
       Navigator.of(context).pushReplacementNamed("home");
     } on FirebaseAuthException catch (e) {
@@ -52,8 +67,21 @@ class _LoginState extends State<Login> {
       final credential = GoogleAuthProvider.credential(
         idToken: googleAuth.idToken,
       );
-
       await FirebaseAuth.instance.signInWithCredential(credential);
+
+      var data = await FirebaseFirestore.instance
+      .collection('users')
+      .where('email', isEqualTo: email.text.trim())
+      .get();
+      setState(() {
+        Users = data.docs;
+      });
+
+      if(Users.isNotEmpty){
+        context.read<UserProvider>().
+        login(Users[0]['name'], 
+        Users[0]['email']);
+      }
 
       Navigator.of(context).pushReplacementNamed("home");
     } catch (e) {

@@ -277,18 +277,24 @@ class _HomeState extends State<Home> {
             ),
 
             const Spacer(),
+            //Admin
+            ListTile(
+              leading: const Icon(Icons.admin_panel_settings_rounded, color: Color(0xFF0D47A1)),
+              title: const Text("Admin"),
+              onTap: () {
+               Navigator.of(context).pushNamed("admin");
+              },
+            ),
+
 
             /// LOGOUT
             Padding(
               padding: const EdgeInsets.all(15),
               child: InkWell(
                 onTap: () async {
-                  context.read<UserProvider>().logout();
                   await FirebaseAuth.instance.signOut();
-
                   GoogleSignIn googleSignIn = GoogleSignIn.instance;
                   googleSignIn.disconnect();
-
                   Navigator.pushReplacementNamed(context, "log");
                 },
 
