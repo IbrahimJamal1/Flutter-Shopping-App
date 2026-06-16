@@ -1,16 +1,77 @@
-# ecommerce
+# 🛒 E-Commerce App
 
-A new Flutter project.
+A modern E-Commerce mobile application built with Flutter and Firebase. The app allows users to browse products, manage their shopping cart, rate products, and create accounts securely.
 
-## Getting Started
+## 🚀 Features
 
-This project is a starting point for a Flutter application.
+* 🔐 User Authentication
 
-A few resources to get you started if this is your first Flutter project:
+  * Login
+  * Register
+  * Logout
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+* 🏠 Home Screen
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+  * Display products
+  * Product categories
+  * Product details
+
+* 🛒 Shopping Cart
+
+  * Add products to cart
+  * Remove products from cart
+  * Update product quantity
+
+* ⭐ Product Rating
+
+  * Rate products
+  * View ratings
+
+* 👤 User Management
+
+  * User profile
+  * Store user information
+
+## 🛠 Technologies Used
+
+* Flutter
+* Dart
+* Firebase Authentication
+* Firebase Storage
+* Provider (State Management)
+
+
+## 🔥 Firebase Integration
+
+### Authentication
+
+* User Login
+* User Registration
+* Secure Authentication
+
+### Cloud Firestore
+
+* Store Products
+* Store User Data
+* Store Ratings
+* Store Cart Information
+
+### Firebase Storage
+
+* Store Product Images
+
+## 📱 Screens
+
+* Login Screen
+* Register Screen
+* Home Screen
+* Product Details Screen
+* Cart Screen
+* Rating Screen
+
+## 👨‍💻 Developer
+
+**Ibrahim Gamal**
+**ibrahimgamal932@gmail.com**
+
+Built using Flutter & Firebase.
